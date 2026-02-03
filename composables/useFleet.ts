@@ -1,5 +1,3 @@
-import api from "~/services/api";
-
 export interface Vehicle {
   vehicle_id: number;
   license_plate: string;
@@ -22,6 +20,8 @@ interface FleetResponse {
 }
 
 export const useFleet = () => {
+  const api = useApi();
+
   // Estado reativo para os dados da frota (apenas sessão)
   const fleetData = useState<Vehicle[]>("fleetData", () => []);
   const isLoading = ref(false);

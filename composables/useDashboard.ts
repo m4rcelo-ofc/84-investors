@@ -1,5 +1,3 @@
-import api from "~/services/api";
-
 interface VehicleStats {
   rented: number;
   available: number;
@@ -53,6 +51,8 @@ interface DashboardResponse {
 }
 
 export const useDashboard = () => {
+  const api = useApi();
+
   // Estado reativo para os dados do dashboard (apenas sessão, não localStorage)
   const dashboardData = useState<DashboardData | null>(
     "dashboardData",

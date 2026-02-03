@@ -1,5 +1,3 @@
-import api from '~/services/api'
-
 interface User {
   id: number
   name: string
@@ -17,6 +15,7 @@ interface LoginResponse {
 }
 
 export const useAuth = () => {
+  const api = useApi();
   const isAuthenticated = useState<boolean>('isAuthenticated', () => false)
   const isLoggingIn = ref(false)
   const isLoggingOut = ref(false)
