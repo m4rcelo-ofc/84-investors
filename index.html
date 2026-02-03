@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>84 Capital - Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* slate-950 */
+            color: #e2e8f0; /* slate-200 */
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        .glass-panel {
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(30, 41, 59, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.7s ease-out forwards;
+        }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="selection:bg-emerald-500/30 overflow-x-hidden">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950 transition-opacity duration-500">
+        <!-- Background Decor -->
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" style="animation-delay: 2s;"></div>
+
+        <div class="w-full max-w-md z-10 animate-fade-in">
+            <div class="text-center mb-10">
+                <div class="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center text-slate-950 font-black text-3xl mx-auto mb-6 shadow-[0_0_40px_rgba(16,185,129,0.4)]">
+                    84
+                </div>
+                <h1 class="text-3xl font-bold text-white tracking-tight">84 Capital</h1>
+                <p class="text-slate-500 mt-2">Gestão Inteligente de Ativos</p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-8 shadow-2xl">
+                <form id="login-form" class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">E-mail</label>
+                        <div class="relative">
+                            <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                            <input type="email" placeholder="exemplo@email.com" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Senha</label>
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                            <input type="password" placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all">
+                            <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
+                                <i data-lucide="eye" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all">
+                        Entrar no Sistema
+                    </button>
+                </form>
+            </div>
+            <p class="text-center mt-8 text-slate-600 text-sm font-bold uppercase tracking-widest">
+                84 Capital © 2024
+            </p>
+        </div>
+    </div>
+
+    <!-- Main App Layout (Hidden initially) -->
+    <div id="app-layout" class="min-h-screen hidden opacity-0 transition-opacity duration-700">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="fixed left-0 top-0 h-full w-24 hidden lg:flex flex-col items-center py-10 border-r border-slate-800/60 bg-slate-950/80 backdrop-blur-2xl z-50">
+            <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-slate-950 font-black text-2xl mb-16 shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105 transition-transform" onclick="switchView('dashboard')">
+                84
+            </div>
+            <nav class="flex flex-col gap-10 flex-1 w-full px-4">
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="p-4 rounded-2xl transition-all relative group flex justify-center text-emerald-400 bg-emerald-500/10 w-full">
+                    <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                    <!-- Tooltip -->
+                    <span class="absolute left-full ml-6 px-2.5 py-1.5 bg-slate-800 text-[10px] text-white rounded-lg font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap tracking-widest border border-slate-700 shadow-xl z-50">Dashboard</span>
+                </button>
+                
+                <button onclick="switchView('frota')" id="nav-frota" class="p-4 rounded-2xl transition-all relative group flex justify-center text-slate-600 hover:text-white w-full">
+                    <i data-lucide="bike" class="w-6 h-6"></i>
+                    <!-- Tooltip -->
+                    <span class="absolute left-full ml-6 px-2.5 py-1.5 bg-slate-800 text-[10px] text-white rounded-lg font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap tracking-widest border border-slate-700 shadow-xl z-50">Frota</span>
+                </button>
+            </nav>
+            
+            <button onclick="logout()" class="p-4 text-slate-700 hover:text-rose-400 transition-all mt-auto mb-4">
+                <i data-lucide="log-out" class="w-6 h-6"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="lg:pl-24 relative z-10">
+            <div class="p-6 md:p-10 max-w-[1500px] mx-auto min-h-screen">
+                
+                <!-- Header -->
+                <header class="mb-12 animate-fade-in">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h1 id="page-title" class="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">
+                                Performance
+                            </h1>
+                            <div class="flex items-center gap-3 mt-2">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                <p id="page-subtitle" class="text-slate-500 font-bold text-xs uppercase tracking-widest">
+                                    Resultados e Métricas
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 bg-slate-900/50 p-2 pr-6 rounded-2xl border border-slate-800/80">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-slate-950 font-bold text-lg">
+                                CS
+                            </div>
+                            <div>
+                                <p class="text-xs font-black text-white uppercase tracking-tighter italic">Carlos Eduardo Silva</p>
+                                <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-[0.2em]">Investidor Ativo</p>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- DASHBOARD VIEW -->
+                <div id="view-dashboard" class="space-y-8 animate-fade-in">
+                    <!-- Top Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Stat 1 -->
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                            <i data-lucide="wallet" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                            <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Investimento Total</p>
+                            <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">R$ 150.000,00</h2>
+                            <span class="text-slate-500 text-xs font-medium">Ativo desde Março</span>
+                        </div>
+                        <!-- Stat 2 -->
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                            <i data-lucide="trending-up" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                            <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Rentabilidade</p>
+                            <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">12.3%</h2>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold flex items-center text-emerald-400">
+                                    <i data-lucide="arrow-up-right" class="w-3 h-3 mr-1"></i> 2.4%
+                                </span>
+                                <span class="text-slate-500 text-xs font-medium">Meta: 10.5%</span>
+                            </div>
+                        </div>
+                        <!-- Stat 3 -->
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                            <i data-lucide="calendar" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                            <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Início do Contrato</p>
+                            <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">12/03/2024</h2>
+                            <span class="text-slate-500 text-xs font-medium">Contrato: 24 meses</span>
+                        </div>
+                        <!-- Stat 4 -->
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                            <i data-lucide="clock" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                            <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Data de Pagamento</p>
+                            <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">Dia 10</h2>
+                            <span class="text-slate-500 text-xs font-medium">Próximo: 10/06</span>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <!-- Daily Performance Chart -->
+                        <div class="glass-panel rounded-2xl p-5 md:p-6 lg:col-span-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
+                                    <i data-lucide="trending-up" class="text-emerald-500 w-4 h-4"></i>
+                                    Desempenho Diário do Mês
+                                </h3>
+                            </div>
+                            <!-- ApexChart Container -->
+                            <div id="dailyChart" class="w-full h-[320px]"></div>
+
+                            <div class="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between p-5 bg-slate-950/40 rounded-2xl border border-slate-800/60">
+                                <div>
+                                    <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1 block">Total Consolidado (Mês)</span>
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-2xl font-bold text-white">R$ 18.450,00</span>
+                                        <span class="text-sm font-bold text-emerald-400">+13.9%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 md:mt-0 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl max-w-sm">
+                                    <p class="text-[9px] text-emerald-500 font-bold uppercase tracking-wider">Comparativo vs Mês Anterior</p>
+                                    <p class="text-xs text-slate-400 mt-1">
+                                        Crescimento de R$ 2.250,00 em relação ao período passado.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fleet Status Chart -->
+                        <div class="glass-panel rounded-2xl p-5 md:p-6 lg:col-span-4 flex flex-col">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
+                                    <i data-lucide="bike" class="text-emerald-500 w-4 h-4"></i>
+                                    Eficiência Operacional
+                                </h3>
+                            </div>
+                            <div id="fleetStatusChart" class="w-full h-[250px] flex justify-center items-center"></div>
+                            
+                            <div class="space-y-3 mt-auto">
+                                <div class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                        <span class="text-xs font-semibold text-slate-300 tracking-wide uppercase">Alugadas</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-white">42 motos</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
+                                        <span class="text-xs font-semibold text-slate-300 tracking-wide uppercase">Manutenção</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-white">5 motos</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+                                        <span class="text-xs font-semibold text-slate-300 tracking-wide uppercase">Disponíveis</span>
+                                    </div>
+                                    <span class="text-sm font-bold text-white">8 motos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-10">
+                        <!-- Moto List Performance -->
+                        <div class="glass-panel rounded-2xl p-5 md:p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
+                                    <i data-lucide="bike" class="text-emerald-500 w-4 h-4"></i>
+                                    Rendimento por Moto
+                                </h3>
+                            </div>
+                            <div class="space-y-6" id="top-motos-list">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+
+                        <!-- Weekly Flow -->
+                        <div class="glass-panel rounded-2xl p-5 md:p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
+                                    <i data-lucide="history" class="text-emerald-500 w-4 h-4"></i>
+                                    Fluxo Semanal
+                                </h3>
+                            </div>
+                            <div id="weeklyChart" class="w-full h-[200px]"></div>
+                            <div class="mt-8 pt-6 border-t border-slate-800/60 flex justify-between">
+                                <div>
+                                    <p class="text-[10px] text-slate-500 font-black uppercase mb-1">Mês Atual</p>
+                                    <p class="text-lg font-bold text-white tracking-tighter">R$ 18.450,00</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] text-slate-500 font-black uppercase mb-1">Mês Anterior</p>
+                                    <p class="text-lg font-bold text-emerald-400 tracking-tighter">R$ 16.200,00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expenses -->
+                        <div class="glass-panel rounded-2xl p-5 md:p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
+                                    <i data-lucide="receipt" class="text-emerald-500 w-4 h-4"></i>
+                                    Despesas Recentes
+                                </h3>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- Expense Items -->
+                                <div class="flex items-center gap-4 p-3 bg-slate-800/10 rounded-2xl border border-slate-800/30">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                                        <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold text-slate-200 uppercase tracking-tight">Manutenção Preventiva</p>
+                                        <p class="text-[10px] text-slate-500 font-medium">20/05</p>
+                                    </div>
+                                    <p class="text-sm font-bold text-rose-400">- R$ 1.200</p>
+                                </div>
+                                <div class="flex items-center gap-4 p-3 bg-slate-800/10 rounded-2xl border border-slate-800/30">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                                        <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold text-slate-200 uppercase tracking-tight">Seguro Frota</p>
+                                        <p class="text-[10px] text-slate-500 font-medium">15/05</p>
+                                    </div>
+                                    <p class="text-sm font-bold text-rose-400">- R$ 3.400</p>
+                                </div>
+                                <div class="flex items-center gap-4 p-3 bg-slate-800/10 rounded-2xl border border-slate-800/30">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                                        <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-xs font-bold text-slate-200 uppercase tracking-tight">Taxas Administrativas</p>
+                                        <p class="text-[10px] text-slate-500 font-medium">10/05</p>
+                                    </div>
+                                    <p class="text-sm font-bold text-rose-400">- R$ 450</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLEET VIEW (Hidden by default) -->
+                <div id="view-frota" class="hidden animate-fade-in pb-10">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-5">
+                        <div class="relative flex-1 max-w-md">
+                            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
+                            <input type="text" placeholder="Buscar por placa ou modelo..." class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/40 text-slate-200">
+                        </div>
+                        <button class="flex items-center gap-2 px-5 py-3.5 bg-slate-900/50 border border-slate-800 rounded-2xl text-xs font-bold uppercase tracking-widest text-slate-400 hover:bg-slate-800 transition-colors">
+                            <i data-lucide="filter" class="w-4 h-4"></i> Filtros
+                        </button>
+                    </div>
+
+                    <!-- Fleet Grid Container -->
+                    <div id="fleet-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <!-- JS will populate cards here -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Background Decor -->
+        <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-emerald-600/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
+        <div class="fixed bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
+    </div>
+
+    <!-- Modal (Hidden by default) -->
+    <div id="moto-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-md w-full relative shadow-2xl transform scale-95 transition-transform duration-300" id="moto-modal-content">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center text-slate-500">
+                    <i data-lucide="camera" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white uppercase italic" id="modal-model">MODELO</h3>
+                    <p class="text-emerald-500 text-xs font-mono font-bold tracking-widest mt-1" id="modal-plate">AAA-0000</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-950/50 rounded-xl border border-slate-800">
+                        <p class="text-[10px] text-slate-500 font-bold uppercase">Ano</p>
+                        <p class="text-white font-bold" id="modal-year">2023</p>
+                    </div>
+                    <div class="p-3 bg-slate-950/50 rounded-xl border border-slate-800">
+                        <p class="text-[10px] text-slate-500 font-bold uppercase">Cor</p>
+                        <p class="text-white font-bold" id="modal-color">Cor</p>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-slate-400">Meta Mensal</span>
+                        <span class="text-white font-bold" id="modal-target">R$ 0,00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-400">Realizado</span>
+                        <span class="text-emerald-400 font-bold" id="modal-received">R$ 0,00</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden">
+                        <div id="modal-progress" class="h-full bg-emerald-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800">
+                    <p class="text-xs text-slate-500 text-center uppercase tracking-widest font-bold">Histórico de Manutenção</p>
+                    <p class="text-center text-slate-600 text-xs mt-2 italic">Nenhum registro recente encontrado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // --- DATA ---
+        const fullMotoList = [
+            { id: 1, plate: 'ABC-1234', received: 1250, target: 1500, status: 'Alugada', model: 'Honda CG 160 Start', year: 2023, color: 'Vermelha' },
+            { id: 2, plate: 'XYZ-9876', received: 1400, target: 1500, status: 'Alugada', model: 'Yamaha Fazer 250', year: 2022, color: 'Azul' },
+            { id: 3, plate: 'KLP-4455', received: 980, target: 1500, status: 'Manutenção', model: 'Honda Biz 125', year: 2024, color: 'Branca' },
+            { id: 4, plate: 'MOT-0084', received: 1500, target: 1500, status: 'Alugada', model: 'Honda CG 160 Titan', year: 2023, color: 'Preta' },
+            { id: 5, plate: 'QWE-1122', received: 0, target: 1500, status: 'Disponível', model: 'Yamaha Factor 150', year: 2022, color: 'Vermelha' },
+            { id: 6, plate: 'RTY-3344', received: 1100, target: 1500, status: 'Alugada', model: 'Honda CG 160 Fan', year: 2023, color: 'Prata' },
+        ];
+
+        // Generate daily data for charts
+        const dailyData = Array.from({ length: 30 }, (_, i) => ({
+            day: i + 1,
+            valor: Math.floor(Math.random() * (800 - 300 + 1) + 300)
+        }));
+
+        const weeklyData = [
+            { x: 'Sem 1', y: 3850 },
+            { x: 'Sem 2', y: 4200 },
+            { x: 'Sem 3', y: 4900 },
+            { x: 'Sem 4', y: 5500 },
+        ];
+
+        // --- DOM ELEMENTS ---
+        const loginScreen = document.getElementById('login-screen');
+        const loginForm = document.getElementById('login-form');
+        const appLayout = document.getElementById('app-layout');
+        const viewDashboard = document.getElementById('view-dashboard');
+        const viewFrota = document.getElementById('view-frota');
+        const navDashboard = document.getElementById('nav-dashboard');
+        const navFrota = document.getElementById('nav-frota');
+        const pageTitle = document.getElementById('page-title');
+        const pageSubtitle = document.getElementById('page-subtitle');
+        const motoListContainer = document.getElementById('top-motos-list');
+        const fleetGrid = document.getElementById('fleet-grid');
+        const modal = document.getElementById('moto-modal');
+        const modalContent = document.getElementById('moto-modal-content');
+
+        // --- INITIALIZATION ---
+        
+        // Populate Top Moto List (Dashboard)
+        fullMotoList.slice(0, 4).forEach(moto => {
+            const pct = Math.round((moto.received / moto.target) * 100);
+            const html = `
+                <div>
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-xs font-mono font-bold text-white bg-slate-800 px-2.5 py-1 rounded-md tracking-widest border border-slate-700">${moto.plate}</span>
+                        <span class="text-sm font-bold text-emerald-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
+                    </div>
+                </div>
+            `;
+            motoListContainer.innerHTML += html;
+        });
+
+        // Populate Fleet Grid (Frota View)
+        fullMotoList.forEach(moto => {
+            const pct = Math.round((moto.received / moto.target) * 100);
+            
+            let statusColorClass = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+            let barColorClass = 'bg-emerald-500';
+            
+            if (moto.status === 'Alugada') {
+                statusColorClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+            } else if (moto.status === 'Manutenção') {
+                statusColorClass = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                barColorClass = 'bg-rose-500';
+            }
+
+            const card = document.createElement('div');
+            card.className = "glass-panel rounded-3xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 shadow-xl group";
+            card.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-500 shrink-0">
+                                <i data-lucide="camera" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm tracking-tight uppercase leading-snug">${moto.model}</h4>
+                                <p class="text-slate-500 text-[10px] font-mono tracking-[0.2em] uppercase mt-1.5 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 w-fit">${moto.plate}</p>
+                            </div>
+                        </div>
+                        <div class="px-2 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider border ${statusColorClass}">
+                            ${moto.status}
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-end">
+                            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Recebimento</span>
+                            <span class="text-base font-bold text-emerald-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800/60 rounded-full overflow-hidden">
+                            <div class="h-full rounded-full transition-all duration-1000 ${barColorClass}" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-6 py-4 bg-slate-800/20 border-t border-slate-800/60 flex justify-between items-center group">
+                    <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Detalhes da Moto</span>
+                    <button onclick="openModal(${moto.id})" class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400 hover:scale-110 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer">
+                        <i data-lucide="info" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+            fleetGrid.appendChild(card);
+        });
+
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- CHARTS CONFIG (ApexCharts) ---
+        
+        // 1. Daily Area Chart
+        const dailyOptions = {
+            series: [{ name: 'Recebimentos', data: dailyData.map(d => d.valor) }],
+            chart: {
+                type: 'area',
+                height: 320,
+                fontFamily: 'Inter, sans-serif',
+                toolbar: { show: false },
+                background: 'transparent'
+            },
+            colors: ['#10b981'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.05,
+                    stops: [0, 90, 100]
+                }
+            },
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth', width: 2 },
+            xaxis: {
+                categories: dailyData.map(d => d.day),
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+                labels: { style: { colors: '#64748b', fontSize: '10px' } }
+            },
+            yaxis: {
+                labels: { 
+                    style: { colors: '#64748b', fontSize: '10px' },
+                    formatter: (value) => `R$${value}`
+                }
+            },
+            grid: {
+                borderColor: '#1e293b',
+                strokeDashArray: 4,
+                yaxis: { lines: { show: true } },
+                xaxis: { lines: { show: false } }
+            },
+            theme: { mode: 'dark' },
+            tooltip: { theme: 'dark' }
+        };
+        const dailyChart = new ApexCharts(document.querySelector("#dailyChart"), dailyOptions);
+        dailyChart.render();
+
+        // 2. Fleet Status Donut Chart
+        const fleetOptions = {
+            series: [42, 5, 8],
+            labels: ['Alugadas', 'Manutenção', 'Disponíveis'],
+            chart: {
+                type: 'donut',
+                height: 250,
+                background: 'transparent'
+            },
+            colors: ['#10b981', '#f59e0b', '#6366f1'],
+            stroke: { show: false },
+            dataLabels: { enabled: false },
+            legend: { show: false },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '75%',
+                        labels: {
+                            show: true,
+                            name: { show: true, color: '#64748b', fontSize: '12px' },
+                            value: { show: true, color: '#fff', fontSize: '24px', fontWeight: 700 },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                color: '#94a3b8',
+                                formatter: function (w) {
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0)
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: { theme: 'dark' }
+        };
+        const fleetChart = new ApexCharts(document.querySelector("#fleetStatusChart"), fleetOptions);
+        fleetChart.render();
+
+        // 3. Weekly Bar Chart
+        const weeklyOptions = {
+            series: [{ name: 'Valor', data: weeklyData.map(d => d.y) }],
+            chart: {
+                type: 'bar',
+                height: 200,
+                toolbar: { show: false },
+                background: 'transparent'
+            },
+            colors: ['#10b981'],
+            plotOptions: {
+                bar: { borderRadius: 4, columnWidth: '40%' }
+            },
+            dataLabels: { enabled: false },
+            xaxis: {
+                categories: weeklyData.map(d => d.x),
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+                labels: { style: { colors: '#64748b', fontSize: '10px' } }
+            },
+            yaxis: { show: false },
+            grid: { show: false },
+            tooltip: { theme: 'dark' }
+        };
+        const weeklyChart = new ApexCharts(document.querySelector("#weeklyChart"), weeklyOptions);
+        weeklyChart.render();
+
+        // --- FUNCTIONS ---
+
+        // Login Logic
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Animation out
+            loginScreen.style.opacity = '0';
+            setTimeout(() => {
+                loginScreen.style.display = 'none';
+                appLayout.classList.remove('hidden');
+                // Trigger reflow for transition
+                void appLayout.offsetWidth;
+                appLayout.style.opacity = '1';
+                // Resize charts just in case
+                window.dispatchEvent(new Event('resize'));
+            }, 500);
+        });
+
+        // Logout Logic
+        function logout() {
+            appLayout.style.opacity = '0';
+            setTimeout(() => {
+                appLayout.classList.add('hidden');
+                loginScreen.style.display = 'flex';
+                // Trigger reflow
+                void loginScreen.offsetWidth;
+                loginScreen.style.opacity = '1';
+            }, 700);
+        }
+
+        // Switch View Logic
+        function switchView(viewName) {
+            // Update Sidebar State
+            if (viewName === 'dashboard') {
+                navDashboard.classList.add('text-emerald-400', 'bg-emerald-500/10');
+                navDashboard.classList.remove('text-slate-600');
+                navFrota.classList.remove('text-emerald-400', 'bg-emerald-500/10');
+                navFrota.classList.add('text-slate-600');
+                
+                // Content
+                viewFrota.classList.add('hidden');
+                viewDashboard.classList.remove('hidden');
+                
+                // Titles
+                pageTitle.innerText = "Performance";
+                pageSubtitle.innerText = "Resultados e Métricas";
+                
+            } else if (viewName === 'frota') {
+                navFrota.classList.add('text-emerald-400', 'bg-emerald-500/10');
+                navFrota.classList.remove('text-slate-600');
+                navDashboard.classList.remove('text-emerald-400', 'bg-emerald-500/10');
+                navDashboard.classList.add('text-slate-600');
+                
+                // Content
+                viewDashboard.classList.add('hidden');
+                viewFrota.classList.remove('hidden');
+                
+                // Titles
+                pageTitle.innerText = "Minha Frota";
+                pageSubtitle.innerText = "Status em tempo real";
+            }
+        }
+
+        // Modal Logic
+        function openModal(id) {
+            const moto = fullMotoList.find(m => m.id === id);
+            if (!moto) return;
+
+            document.getElementById('modal-model').innerText = moto.model;
+            document.getElementById('modal-plate').innerText = moto.plate;
+            document.getElementById('modal-year').innerText = moto.year;
+            document.getElementById('modal-color').innerText = moto.color;
+            document.getElementById('modal-target').innerText = `R$ ${moto.target.toLocaleString('pt-BR')}`;
+            document.getElementById('modal-received').innerText = `R$ ${moto.received.toLocaleString('pt-BR')}`;
+            
+            const pct = (moto.received / moto.target) * 100;
+            document.getElementById('modal-progress').style.width = `${pct}%`;
+
+            modal.classList.remove('hidden');
+            // Animate in
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modal on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+    </script>
+</body>
+</html>
