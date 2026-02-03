@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Filter, Search } from "lucide-vue-next";
+import { Search } from "lucide-vue-next";
 import type { Vehicle } from "~/types";
 
 // Composables
@@ -34,6 +34,15 @@ const loginScreenRef = ref<{
 // Current view state
 const currentView = ref<"dashboard" | "frota">("dashboard");
 const searchQuery = ref("");
+const statusFilter = ref<string | null>(null);
+
+// Status filter options
+const statusOptions = [
+  { value: "rented", label: "Alugadas", color: "emerald" },
+  { value: "maintenance", label: "Manutenção", color: "amber" },
+  { value: "available", label: "Disponíveis", color: "indigo" },
+  { value: "unavailable", label: "Indisponíveis", color: "red" },
+];
 
 // Verificar autenticação e carregar dados ao carregar
 onMounted(async () => {
@@ -118,16 +127,36 @@ const handleOpenModal = (vehicle: Vehicle) => {
   openModal(vehicle);
 };
 
-// Filtered vehicles for search
+// Toggle status filter
+const toggleStatusFilter = (status: string) => {
+  if (statusFilter.value === status) {
+    statusFilter.value = null;
+  } else {
+    statusFilter.value = status;
+  }
+};
+
+// Filtered vehicles for search and status
 const filteredVehicles = computed(() => {
-  if (!searchQuery.value) return fleetData.value;
-  const query = searchQuery.value.toLowerCase();
-  return fleetData.value.filter(
-    (vehicle) =>
-      vehicle.license_plate.toLowerCase().includes(query) ||
-      vehicle.model.toLowerCase().includes(query) ||
-      vehicle.brand.toLowerCase().includes(query),
-  );
+  let vehicles = fleetData.value;
+
+  // Filtrar por status
+  if (statusFilter.value) {
+    vehicles = vehicles.filter((vehicle) => vehicle.status === statusFilter.value);
+  }
+
+  // Filtrar por busca
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    vehicles = vehicles.filter(
+      (vehicle) =>
+        vehicle.license_plate.toLowerCase().includes(query) ||
+        vehicle.model.toLowerCase().includes(query) ||
+        vehicle.brand.toLowerCase().includes(query),
+    );
+  }
+
+  return vehicles;
 });
 
 // Top motos por receita (baseado nos dados da API)
@@ -241,9 +270,8 @@ const topMotos = computed(() => {
 
             <!-- FLEET VIEW -->
             <div v-show="currentView === 'frota'" class="animate-fade-in pb-10">
-              <div
-                class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-5"
-              >
+              <!-- Search and Filters -->
+              <div class="space-y-4 mb-8">
                 <div class="relative flex-1 max-w-md">
                   <Search
                     class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"
@@ -255,12 +283,36 @@ const topMotos = computed(() => {
                     class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/40 text-slate-200"
                   />
                 </div>
-                <button
-                  class="flex items-center gap-2 px-5 py-3.5 bg-slate-900/50 border border-slate-800 rounded-2xl text-xs font-bold uppercase tracking-widest text-slate-400 hover:bg-slate-800 transition-colors"
-                >
-                  <Filter class="w-4 h-4" />
-                  Filtros
-                </button>
+
+                <!-- Status Filter Buttons -->
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="option in statusOptions"
+                    :key="option.value"
+                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all"
+                    :class="[
+                      statusFilter === option.value
+                        ? option.color === 'emerald'
+                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                          : option.color === 'amber'
+                            ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
+                            : option.color === 'indigo'
+                              ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/40'
+                              : 'bg-red-500/20 text-red-400 border-red-500/40'
+                        : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800',
+                    ]"
+                    @click="toggleStatusFilter(option.value)"
+                  >
+                    {{ option.label }}
+                  </button>
+                  <button
+                    v-if="statusFilter"
+                    class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800 transition-all"
+                    @click="statusFilter = null"
+                  >
+                    Limpar filtro
+                  </button>
+                </div>
               </div>
 
               <!-- Fleet Grid Container -->
