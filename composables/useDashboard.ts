@@ -101,17 +101,24 @@ export const useDashboard = () => {
 
   const contractInfo = computed(() => {
     if (!dashboardData.value) {
-      return { startDate: "", endDate: "", months: 0 };
+      return { startDate: "", endDate: "", months: null as number | null };
     }
-    const start = new Date(dashboardData.value.contract_start_date);
-    const end = new Date(dashboardData.value.contract_end_date);
-    const months = Math.round(
-      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30),
-    );
+    const rawStart = dashboardData.value.contract_start_date;
+    const rawEnd = dashboardData.value.contract_end_date;
+
+    const start = rawStart ? new Date(rawStart) : null;
+    const end = rawEnd ? new Date(rawEnd) : null;
+
+    const months =
+      start && end
+        ? Math.round(
+            (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30),
+          )
+        : null;
 
     return {
-      startDate: start.toLocaleDateString("pt-BR"),
-      endDate: end.toLocaleDateString("pt-BR"),
+      startDate: start ? start.toLocaleDateString("pt-BR") : "",
+      endDate: end ? end.toLocaleDateString("pt-BR") : "",
       months,
     };
   });

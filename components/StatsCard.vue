@@ -5,7 +5,7 @@ interface Props {
   type: 'investment' | 'rentability' | 'contract' | 'payment'
   value: string
   label: string
-  subtext: string
+  subtext?: string
   trend?: {
     value: string
     isPositive: boolean
@@ -51,7 +51,7 @@ const iconComponents = {
         {{ meta }}
       </span>
     </div>
-    <span v-else class="text-slate-500 text-xs font-medium">
+    <span v-else-if="subtext" class="text-slate-500 text-xs font-medium">
       {{ subtext }}
     </span>
   </div>

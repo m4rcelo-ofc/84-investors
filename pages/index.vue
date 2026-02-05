@@ -228,7 +228,7 @@ const topMotos = computed(() => {
                   type="contract"
                   label="Início do Contrato"
                   :value="contractInfo.startDate"
-                  :subtext="`Contrato: ${contractInfo.months} meses`"
+                  :subtext="contractInfo.months != null ? `Contrato: ${contractInfo.months} meses` : undefined"
                 />
                 <StatsCard
                   type="payment"
