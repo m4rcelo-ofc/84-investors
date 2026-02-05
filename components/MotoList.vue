@@ -17,7 +17,7 @@ const { calculatePercentage, formatCurrency } = useMotoData()
       <h3
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
-        <Bike class="text-emerald-500 w-4 h-4" />
+        <Bike class="text-blue-500 w-4 h-4" />
         Rendimento por Moto
       </h3>
     </div>
@@ -29,13 +29,13 @@ const { calculatePercentage, formatCurrency } = useMotoData()
           >
             {{ moto.plate }}
           </span>
-          <span class="text-sm font-bold text-emerald-400">
+          <span class="text-sm font-bold text-blue-400">
             R$ {{ formatCurrency(moto.received) }}
           </span>
         </div>
         <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
           <div
-            class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000"
+            class="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-1000"
             :style="{
               width: `${calculatePercentage(moto.received, moto.target)}%`,
             }"

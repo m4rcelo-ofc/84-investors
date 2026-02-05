@@ -44,7 +44,7 @@ defineExpose({
   >
     <!-- Background Decor -->
     <div
-      class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"
+      class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"
     />
     <div
       class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"
@@ -54,7 +54,7 @@ defineExpose({
     <div class="w-full max-w-md z-10 animate-fade-in">
       <div class="text-center mb-10">
         <div
-          class="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center text-slate-950 font-black text-3xl mx-auto mb-6 shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+          class="w-20 h-20 bg-blue-500 rounded-3xl flex items-center justify-center text-slate-950 font-black text-3xl mx-auto mb-6 shadow-[0_0_40px_rgba(59,130,246,0.4)]"
         >
           84
         </div>
@@ -87,7 +87,7 @@ defineExpose({
                 type="email"
                 placeholder="exemplo@email.com"
                 :disabled="isLoading"
-                class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all disabled:opacity-50"
+                class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all disabled:opacity-50"
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ defineExpose({
                 :type="showPassword ? 'text' : 'password'"
                 placeholder="••••••••"
                 :disabled="isLoading"
-                class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all disabled:opacity-50"
+                class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all disabled:opacity-50"
               />
               <button
                 type="button"
@@ -124,7 +124,7 @@ defineExpose({
           <button
             type="submit"
             :disabled="isLoading"
-            class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            class="w-full bg-blue-500 hover:bg-blue-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <Loader2 v-if="isLoading" class="w-5 h-5 animate-spin" />
             {{ isLoading ? 'Entrando...' : 'Entrar no Sistema' }}

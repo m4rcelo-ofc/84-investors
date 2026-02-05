@@ -37,7 +37,7 @@ const chartOptions = computed(() => ({
     toolbar: { show: false },
     background: 'transparent',
   },
-  colors: ['#10b981'],
+  colors: ['#3b82f6'],
   fill: {
     type: 'gradient',
     gradient: {
@@ -90,7 +90,7 @@ const formatCurrency = (value: number) => {
       <h3
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
-        <TrendingUp class="text-emerald-500 w-4 h-4" />
+        <TrendingUp class="text-blue-500 w-4 h-4" />
         Desempenho Diário do Ciclo
       </h3>
     </div>
@@ -118,16 +118,16 @@ const formatCurrency = (value: number) => {
           <span class="text-2xl font-bold text-white">R$ {{ formatCurrency(totalRevenue) }}</span>
           <span
             class="text-sm font-bold"
-            :class="revenueChange >= 0 ? 'text-emerald-400' : 'text-red-400'"
+            :class="revenueChange >= 0 ? 'text-blue-400' : 'text-red-400'"
           >
             {{ revenueChangeFormatted }}
           </span>
         </div>
       </div>
       <div
-        class="mt-4 md:mt-0 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl max-w-sm"
+        class="mt-4 md:mt-0 p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl max-w-sm"
       >
-        <p class="text-[9px] text-emerald-500 font-bold uppercase tracking-wider">
+        <p class="text-[9px] text-blue-500 font-bold uppercase tracking-wider">
           Comparativo vs Ciclo Anterior
         </p>
         <p class="text-xs text-slate-400 mt-1">

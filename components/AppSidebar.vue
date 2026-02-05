@@ -20,10 +20,10 @@ const isActive = (view: string) => props.currentView === view
     class="fixed left-0 top-0 h-full w-24 hidden lg:flex flex-col items-center py-10 border-r border-slate-800/60 bg-slate-950/80 backdrop-blur-2xl z-50"
   >
     <div
-      class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-slate-950 font-black text-2xl mb-16 shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105 transition-transform"
+      class="w-14 h-14 rounded-2xl flex items-center justify-center mb-16 shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer hover:scale-105 transition-transform overflow-hidden"
       @click="emit('switch-view', 'dashboard')"
     >
-      84
+      <img src="~/assets/images/logo.svg" alt="84 Capital" class="w-full h-full object-cover" />
     </div>
 
     <nav class="flex flex-col gap-10 flex-1 w-full px-4">
@@ -31,7 +31,7 @@ const isActive = (view: string) => props.currentView === view
         class="p-4 rounded-2xl transition-all relative group flex justify-center w-full"
         :class="
           isActive('dashboard')
-            ? 'text-emerald-400 bg-emerald-500/10'
+            ? 'text-blue-400 bg-blue-500/10'
             : 'text-slate-600 hover:text-white'
         "
         @click="emit('switch-view', 'dashboard')"
@@ -49,7 +49,7 @@ const isActive = (view: string) => props.currentView === view
         class="p-4 rounded-2xl transition-all relative group flex justify-center w-full"
         :class="
           isActive('frota')
-            ? 'text-emerald-400 bg-emerald-500/10'
+            ? 'text-blue-400 bg-blue-500/10'
             : 'text-slate-600 hover:text-white'
         "
         @click="emit('switch-view', 'frota')"

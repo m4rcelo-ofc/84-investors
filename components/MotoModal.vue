@@ -48,13 +48,13 @@ const statusClasses = computed(() => {
   if (!props.vehicle) return "";
   switch (props.vehicle.status) {
     case "rented":
-      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+      return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
     case "maintenance":
       return "bg-amber-500/10 text-amber-400 border-amber-500/20";
     case "unavailable":
       return "bg-red-500/10 text-red-400 border-red-500/20";
     case "available":
-      return "bg-indigo-500/10 text-indigo-400 border-indigo-500/20";
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
     default:
       return "bg-slate-500/10 text-slate-400 border-slate-500/20";
   }
@@ -109,7 +109,7 @@ const handleBackdropClick = (e: MouseEvent) => {
                 {{ vehicle.brand }} {{ vehicle.model }}
               </h3>
               <p
-                class="text-emerald-500 text-xs font-mono font-bold tracking-widest mt-1"
+                class="text-blue-500 text-xs font-mono font-bold tracking-widest mt-1"
               >
                 {{ vehicle.license_plate }}
               </p>
@@ -153,7 +153,7 @@ const handleBackdropClick = (e: MouseEvent) => {
 
             <!-- Financeiro -->
             <div
-              class="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl"
+              class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl"
             >
               <div class="flex justify-between items-center mb-2">
                 <span class="text-xs font-bold text-slate-400">Meta do Ciclo</span>
@@ -163,7 +163,7 @@ const handleBackdropClick = (e: MouseEvent) => {
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-xs font-bold text-slate-400">Realizado</span>
-                <span class="text-emerald-400 font-bold">
+                <span class="text-blue-400 font-bold">
                   R$ {{ formatCurrency(vehicle.paid_amount) }}
                 </span>
               </div>
@@ -171,7 +171,7 @@ const handleBackdropClick = (e: MouseEvent) => {
                 class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden"
               >
                 <div
-                  class="h-full bg-emerald-500 transition-all duration-500"
+                  class="h-full bg-blue-500 transition-all duration-500"
                   :style="{ width: `${percentage}%` }"
                 />
               </div>

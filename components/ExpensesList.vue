@@ -17,7 +17,7 @@ const { formatCurrency } = useMotoData()
       <h3
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
-        <Receipt class="text-emerald-500 w-4 h-4" />
+        <Receipt class="text-blue-500 w-4 h-4" />
         Despesas Recentes
       </h3>
     </div>

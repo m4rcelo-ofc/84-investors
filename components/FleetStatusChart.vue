@@ -16,7 +16,7 @@ const chartOptions = computed(() => ({
     height: 250,
     background: "transparent",
   },
-  colors: ["#10b981", "#f59e0b", "#6366f1", "#ef4444"],
+  colors: ["#06b6d4", "#f59e0b", "#10b981", "#ef4444"],
   labels: ["Alugadas", "Manutenção", "Disponíveis", "Indisponíveis"],
   stroke: { show: false },
   dataLabels: { enabled: false },
@@ -65,7 +65,7 @@ const series = computed(() => [
       <h3
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
-        <Bike class="text-emerald-500 w-4 h-4" />
+        <Bike class="text-blue-500 w-4 h-4" />
         Eficiência Operacional
       </h3>
     </div>
@@ -86,7 +86,7 @@ const series = computed(() => [
         class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40"
       >
         <div class="flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+          <div class="w-2.5 h-2.5 rounded-full bg-cyan-500" />
           <span
             class="text-xs font-semibold text-slate-300 tracking-wide uppercase"
           >
@@ -112,7 +112,7 @@ const series = computed(() => [
         class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40"
       >
         <div class="flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-full bg-indigo-500" />
+          <div class="w-2.5 h-2.5 rounded-full bg-emerald-500" />
           <span
             class="text-xs font-semibold text-slate-300 tracking-wide uppercase"
           >

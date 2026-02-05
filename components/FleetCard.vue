@@ -22,13 +22,13 @@ const displayStatus = computed(() => translateStatus(props.vehicle.status));
 const statusClasses = computed(() => {
   switch (props.vehicle.status) {
     case "rented":
-      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+      return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
     case "maintenance":
       return "bg-amber-500/10 text-amber-400 border-amber-500/20";
     case "unavailable":
       return "bg-red-500/10 text-red-400 border-red-500/20";
     case "available":
-      return "bg-indigo-500/10 text-indigo-400 border-indigo-500/20";
+      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
     default:
       return "bg-slate-500/10 text-slate-400 border-slate-500/20";
   }
@@ -38,13 +38,13 @@ const statusClasses = computed(() => {
 const barColorClass = computed(() => {
   switch (props.vehicle.status) {
     case "rented":
-      return "bg-emerald-500";
+      return "bg-cyan-500";
     case "maintenance":
       return "bg-amber-500";
     case "unavailable":
       return "bg-red-500";
     default:
-      return "bg-indigo-500";
+      return "bg-emerald-500";
   }
 });
 
@@ -70,7 +70,7 @@ const imageUrl = computed(() => {
 
 <template>
   <div
-    class="glass-panel rounded-3xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 shadow-xl group"
+    class="glass-panel rounded-3xl overflow-hidden hover:border-blue-500/40 transition-all duration-300 shadow-xl group"
   >
     <div class="p-6">
       <div class="flex justify-between items-start mb-6">
@@ -119,7 +119,7 @@ const imageUrl = computed(() => {
           >
             Recebimento
           </span>
-          <span class="text-base font-bold text-emerald-400">
+          <span class="text-base font-bold text-blue-400">
             R$ {{ formatCurrency(vehicle.paid_amount) }}
           </span>
         </div>
@@ -147,7 +147,7 @@ const imageUrl = computed(() => {
         Detalhes do Veículo
       </span>
       <button
-        class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400 hover:scale-110 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer"
+        class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-blue-400 hover:scale-110 hover:bg-blue-500 hover:text-white transition-all cursor-pointer"
         @click="emit('open-modal', vehicle)"
       >
         <Info class="w-4 h-4" />

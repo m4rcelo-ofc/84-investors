@@ -25,11 +25,11 @@ const iconComponents = {
 
 <template>
   <div
-    class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300"
+    class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300"
   >
     <component
       :is="iconComponents[type]"
-      class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"
+      class="absolute -top-2 -right-2 w-16 h-16 text-blue-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"
     />
     <p
       class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2"
@@ -42,7 +42,7 @@ const iconComponents = {
     <div v-if="trend" class="flex items-center gap-2">
       <span
         class="text-xs font-bold flex items-center"
-        :class="trend.isPositive ? 'text-emerald-400' : 'text-rose-400'"
+        :class="trend.isPositive ? 'text-blue-400' : 'text-rose-400'"
       >
         <ArrowUpRight class="w-3 h-3 mr-1" />
         {{ trend.value }}

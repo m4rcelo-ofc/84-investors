@@ -38,9 +38,9 @@ const statusFilter = ref<string | null>(null);
 
 // Status filter options
 const statusOptions = [
-  { value: "rented", label: "Alugadas", color: "emerald" },
+  { value: "rented", label: "Alugadas", color: "cyan" },
   { value: "maintenance", label: "Manutenção", color: "amber" },
-  { value: "available", label: "Disponíveis", color: "indigo" },
+  { value: "available", label: "Disponíveis", color: "emerald" },
   { value: "unavailable", label: "Indisponíveis", color: "red" },
 ];
 
@@ -175,7 +175,7 @@ const topMotos = computed(() => {
 </script>
 
 <template>
-  <div class="selection:bg-emerald-500/30 overflow-x-hidden">
+  <div class="selection:bg-blue-500/30 overflow-x-hidden">
     <!-- Login Screen -->
     <Transition
       enter-active-class="transition-opacity duration-500"
@@ -280,7 +280,7 @@ const topMotos = computed(() => {
                     v-model="searchQuery"
                     type="text"
                     placeholder="Buscar por placa, modelo ou marca..."
-                    class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/40 text-slate-200"
+                    class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-200"
                   />
                 </div>
 
@@ -292,12 +292,12 @@ const topMotos = computed(() => {
                     class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all"
                     :class="[
                       statusFilter === option.value
-                        ? option.color === 'emerald'
-                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                        ? option.color === 'cyan'
+                          ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
                           : option.color === 'amber'
                             ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                            : option.color === 'indigo'
-                              ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/40'
+                            : option.color === 'emerald'
+                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
                               : 'bg-red-500/20 text-red-400 border-red-500/40'
                         : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800',
                     ]"

@@ -65,17 +65,17 @@
         }
     </style>
 </head>
-<body class="selection:bg-emerald-500/30 overflow-x-hidden">
+<body class="selection:bg-blue-500/30 overflow-x-hidden">
 
     <!-- Login Screen -->
     <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950 transition-opacity duration-500">
         <!-- Background Decor -->
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none" style="animation-delay: 2s;"></div>
 
         <div class="w-full max-w-md z-10 animate-fade-in">
             <div class="text-center mb-10">
-                <div class="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center text-slate-950 font-black text-3xl mx-auto mb-6 shadow-[0_0_40px_rgba(16,185,129,0.4)]">
+                <div class="w-20 h-20 bg-blue-500 rounded-3xl flex items-center justify-center text-slate-950 font-black text-3xl mx-auto mb-6 shadow-[0_0_40px_rgba(59,130,246,0.4)]">
                     84
                 </div>
                 <h1 class="text-3xl font-bold text-white tracking-tight">84 Capital</h1>
@@ -88,7 +88,7 @@
                         <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">E-mail</label>
                         <div class="relative">
                             <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
-                            <input type="email" placeholder="exemplo@email.com" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all">
+                            <input type="email" placeholder="exemplo@email.com" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all">
                         </div>
                     </div>
 
@@ -96,14 +96,14 @@
                         <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Senha</label>
                         <div class="relative">
                             <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
-                            <input type="password" placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-all">
+                            <input type="password" placeholder="••••••••" class="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-3.5 pl-12 pr-12 text-white placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/40 outline-none transition-all">
                             <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
                                 <i data-lucide="eye" class="w-5 h-5"></i>
                             </button>
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all">
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-400 text-slate-950 font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all">
                         Entrar no Sistema
                     </button>
                 </form>
@@ -119,11 +119,11 @@
         
         <!-- Sidebar Navigation -->
         <aside class="fixed left-0 top-0 h-full w-24 hidden lg:flex flex-col items-center py-10 border-r border-slate-800/60 bg-slate-950/80 backdrop-blur-2xl z-50">
-            <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-slate-950 font-black text-2xl mb-16 shadow-[0_0_30px_rgba(16,185,129,0.3)] cursor-pointer hover:scale-105 transition-transform" onclick="switchView('dashboard')">
+            <div class="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-slate-950 font-black text-2xl mb-16 shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer hover:scale-105 transition-transform" onclick="switchView('dashboard')">
                 84
             </div>
             <nav class="flex flex-col gap-10 flex-1 w-full px-4">
-                <button onclick="switchView('dashboard')" id="nav-dashboard" class="p-4 rounded-2xl transition-all relative group flex justify-center text-emerald-400 bg-emerald-500/10 w-full">
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="p-4 rounded-2xl transition-all relative group flex justify-center text-blue-400 bg-blue-500/10 w-full">
                     <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
                     <!-- Tooltip -->
                     <span class="absolute left-full ml-6 px-2.5 py-1.5 bg-slate-800 text-[10px] text-white rounded-lg font-black uppercase opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap tracking-widest border border-slate-700 shadow-xl z-50">Dashboard</span>
@@ -153,7 +153,7 @@
                                 Performance
                             </h1>
                             <div class="flex items-center gap-3 mt-2">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
                                 <p id="page-subtitle" class="text-slate-500 font-bold text-xs uppercase tracking-widest">
                                     Resultados e Métricas
                                 </p>
@@ -161,12 +161,12 @@
                         </div>
                         
                         <div class="flex items-center gap-4 bg-slate-900/50 p-2 pr-6 rounded-2xl border border-slate-800/80">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-slate-950 font-bold text-lg">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 flex items-center justify-center text-slate-950 font-bold text-lg">
                                 CS
                             </div>
                             <div>
                                 <p class="text-xs font-black text-white uppercase tracking-tighter italic">Carlos Eduardo Silva</p>
-                                <p class="text-[10px] text-emerald-500 font-bold uppercase tracking-[0.2em]">Investidor Ativo</p>
+                                <p class="text-[10px] text-blue-500 font-bold uppercase tracking-[0.2em]">Investidor Ativo</p>
                             </div>
                         </div>
                     </div>
@@ -177,34 +177,34 @@
                     <!-- Top Stats -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Stat 1 -->
-                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
-                            <i data-lucide="wallet" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                            <i data-lucide="wallet" class="absolute -top-2 -right-2 w-16 h-16 text-blue-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
                             <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Investimento Total</p>
                             <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">R$ 150.000,00</h2>
                             <span class="text-slate-500 text-xs font-medium">Ativo desde Março</span>
                         </div>
                         <!-- Stat 2 -->
-                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
-                            <i data-lucide="trending-up" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                            <i data-lucide="trending-up" class="absolute -top-2 -right-2 w-16 h-16 text-blue-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
                             <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Rentabilidade</p>
                             <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">12.3%</h2>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold flex items-center text-emerald-400">
+                                <span class="text-xs font-bold flex items-center text-blue-400">
                                     <i data-lucide="arrow-up-right" class="w-3 h-3 mr-1"></i> 2.4%
                                 </span>
                                 <span class="text-slate-500 text-xs font-medium">Meta: 10.5%</span>
                             </div>
                         </div>
                         <!-- Stat 3 -->
-                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
-                            <i data-lucide="calendar" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                            <i data-lucide="calendar" class="absolute -top-2 -right-2 w-16 h-16 text-blue-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
                             <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Início do Contrato</p>
                             <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">12/03/2024</h2>
                             <span class="text-slate-500 text-xs font-medium">Contrato: 24 meses</span>
                         </div>
                         <!-- Stat 4 -->
-                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
-                            <i data-lucide="clock" class="absolute -top-2 -right-2 w-16 h-16 text-emerald-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
+                        <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                            <i data-lucide="clock" class="absolute -top-2 -right-2 w-16 h-16 text-blue-500 opacity-5 group-hover:opacity-10 transition-opacity rotate-12"></i>
                             <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-2">Data de Pagamento</p>
                             <h2 class="text-2xl font-bold text-white mb-1 tracking-tight">Dia 10</h2>
                             <span class="text-slate-500 text-xs font-medium">Próximo: 10/06</span>
@@ -217,7 +217,7 @@
                         <div class="glass-panel rounded-2xl p-5 md:p-6 lg:col-span-8">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
-                                    <i data-lucide="trending-up" class="text-emerald-500 w-4 h-4"></i>
+                                    <i data-lucide="trending-up" class="text-blue-500 w-4 h-4"></i>
                                     Desempenho Diário do Mês
                                 </h3>
                             </div>
@@ -229,11 +229,11 @@
                                     <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1 block">Total Consolidado (Mês)</span>
                                     <div class="flex items-baseline gap-2">
                                         <span class="text-2xl font-bold text-white">R$ 18.450,00</span>
-                                        <span class="text-sm font-bold text-emerald-400">+13.9%</span>
+                                        <span class="text-sm font-bold text-blue-400">+13.9%</span>
                                     </div>
                                 </div>
-                                <div class="mt-4 md:mt-0 p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl max-w-sm">
-                                    <p class="text-[9px] text-emerald-500 font-bold uppercase tracking-wider">Comparativo vs Mês Anterior</p>
+                                <div class="mt-4 md:mt-0 p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl max-w-sm">
+                                    <p class="text-[9px] text-blue-500 font-bold uppercase tracking-wider">Comparativo vs Mês Anterior</p>
                                     <p class="text-xs text-slate-400 mt-1">
                                         Crescimento de R$ 2.250,00 em relação ao período passado.
                                     </p>
@@ -245,7 +245,7 @@
                         <div class="glass-panel rounded-2xl p-5 md:p-6 lg:col-span-4 flex flex-col">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
-                                    <i data-lucide="bike" class="text-emerald-500 w-4 h-4"></i>
+                                    <i data-lucide="bike" class="text-blue-500 w-4 h-4"></i>
                                     Eficiência Operacional
                                 </h3>
                             </div>
@@ -254,7 +254,7 @@
                             <div class="space-y-3 mt-auto">
                                 <div class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-cyan-500"></div>
                                         <span class="text-xs font-semibold text-slate-300 tracking-wide uppercase">Alugadas</span>
                                     </div>
                                     <span class="text-sm font-bold text-white">42 motos</span>
@@ -268,7 +268,7 @@
                                 </div>
                                 <div class="flex items-center justify-between p-3.5 bg-slate-800/20 rounded-xl border border-slate-800/40">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                                         <span class="text-xs font-semibold text-slate-300 tracking-wide uppercase">Disponíveis</span>
                                     </div>
                                     <span class="text-sm font-bold text-white">8 motos</span>
@@ -283,7 +283,7 @@
                         <div class="glass-panel rounded-2xl p-5 md:p-6">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
-                                    <i data-lucide="bike" class="text-emerald-500 w-4 h-4"></i>
+                                    <i data-lucide="bike" class="text-blue-500 w-4 h-4"></i>
                                     Rendimento por Moto
                                 </h3>
                             </div>
@@ -296,7 +296,7 @@
                         <div class="glass-panel rounded-2xl p-5 md:p-6">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
-                                    <i data-lucide="history" class="text-emerald-500 w-4 h-4"></i>
+                                    <i data-lucide="history" class="text-blue-500 w-4 h-4"></i>
                                     Fluxo Semanal
                                 </h3>
                             </div>
@@ -308,7 +308,7 @@
                                 </div>
                                 <div class="text-right">
                                     <p class="text-[10px] text-slate-500 font-black uppercase mb-1">Mês Anterior</p>
-                                    <p class="text-lg font-bold text-emerald-400 tracking-tighter">R$ 16.200,00</p>
+                                    <p class="text-lg font-bold text-blue-400 tracking-tighter">R$ 16.200,00</p>
                                 </div>
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                         <div class="glass-panel rounded-2xl p-5 md:p-6">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase">
-                                    <i data-lucide="receipt" class="text-emerald-500 w-4 h-4"></i>
+                                    <i data-lucide="receipt" class="text-blue-500 w-4 h-4"></i>
                                     Despesas Recentes
                                 </h3>
                             </div>
@@ -363,7 +363,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-5">
                         <div class="relative flex-1 max-w-md">
                             <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"></i>
-                            <input type="text" placeholder="Buscar por placa ou modelo..." class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/40 text-slate-200">
+                            <input type="text" placeholder="Buscar por placa ou modelo..." class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl py-3.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-200">
                         </div>
                         <button class="flex items-center gap-2 px-5 py-3.5 bg-slate-900/50 border border-slate-800 rounded-2xl text-xs font-bold uppercase tracking-widest text-slate-400 hover:bg-slate-800 transition-colors">
                             <i data-lucide="filter" class="w-4 h-4"></i> Filtros
@@ -380,7 +380,7 @@
         </main>
 
         <!-- Background Decor -->
-        <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-emerald-600/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
+        <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
         <div class="fixed bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/5 blur-[150px] rounded-full pointer-events-none -z-10"></div>
     </div>
 
@@ -397,7 +397,7 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-white uppercase italic" id="modal-model">MODELO</h3>
-                    <p class="text-emerald-500 text-xs font-mono font-bold tracking-widest mt-1" id="modal-plate">AAA-0000</p>
+                    <p class="text-blue-500 text-xs font-mono font-bold tracking-widest mt-1" id="modal-plate">AAA-0000</p>
                 </div>
             </div>
 
@@ -413,17 +413,17 @@
                     </div>
                 </div>
                 
-                <div class="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl">
+                <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-xs font-bold text-slate-400">Meta Mensal</span>
                         <span class="text-white font-bold" id="modal-target">R$ 0,00</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-bold text-slate-400">Realizado</span>
-                        <span class="text-emerald-400 font-bold" id="modal-received">R$ 0,00</span>
+                        <span class="text-blue-400 font-bold" id="modal-received">R$ 0,00</span>
                     </div>
                     <div class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden">
-                        <div id="modal-progress" class="h-full bg-emerald-500" style="width: 0%"></div>
+                        <div id="modal-progress" class="h-full bg-blue-500" style="width: 0%"></div>
                     </div>
                 </div>
 
@@ -484,10 +484,10 @@
                 <div>
                     <div class="flex justify-between items-end mb-2">
                         <span class="text-xs font-mono font-bold text-white bg-slate-800 px-2.5 py-1 rounded-md tracking-widest border border-slate-700">${moto.plate}</span>
-                        <span class="text-sm font-bold text-emerald-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
+                        <span class="text-sm font-bold text-blue-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
                     </div>
                     <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
+                        <div class="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
                     </div>
                 </div>
             `;
@@ -498,18 +498,18 @@
         fullMotoList.forEach(moto => {
             const pct = Math.round((moto.received / moto.target) * 100);
             
-            let statusColorClass = 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-            let barColorClass = 'bg-emerald-500';
-            
+            let statusColorClass = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+            let barColorClass = 'bg-cyan-500';
+
             if (moto.status === 'Alugada') {
-                statusColorClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                statusColorClass = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
             } else if (moto.status === 'Manutenção') {
                 statusColorClass = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
                 barColorClass = 'bg-rose-500';
             }
 
             const card = document.createElement('div');
-            card.className = "glass-panel rounded-3xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 shadow-xl group";
+            card.className = "glass-panel rounded-3xl overflow-hidden hover:border-blue-500/40 transition-all duration-300 shadow-xl group";
             card.innerHTML = `
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-6">
@@ -530,7 +530,7 @@
                     <div class="space-y-4">
                         <div class="flex justify-between items-end">
                             <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Recebimento</span>
-                            <span class="text-base font-bold text-emerald-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
+                            <span class="text-base font-bold text-blue-400">R$ ${moto.received.toLocaleString('pt-BR')}</span>
                         </div>
                         <div class="w-full h-2 bg-slate-800/60 rounded-full overflow-hidden">
                             <div class="h-full rounded-full transition-all duration-1000 ${barColorClass}" style="width: ${pct}%"></div>
@@ -539,7 +539,7 @@
                 </div>
                 <div class="px-6 py-4 bg-slate-800/20 border-t border-slate-800/60 flex justify-between items-center group">
                     <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Detalhes da Moto</span>
-                    <button onclick="openModal(${moto.id})" class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-emerald-400 hover:scale-110 hover:bg-emerald-500 hover:text-white transition-all cursor-pointer">
+                    <button onclick="openModal(${moto.id})" class="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-blue-400 hover:scale-110 hover:bg-blue-500 hover:text-white transition-all cursor-pointer">
                         <i data-lucide="info" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -562,7 +562,7 @@
                 toolbar: { show: false },
                 background: 'transparent'
             },
-            colors: ['#10b981'],
+            colors: ['#3b82f6'],
             fill: {
                 type: 'gradient',
                 gradient: {
@@ -607,7 +607,7 @@
                 height: 250,
                 background: 'transparent'
             },
-            colors: ['#10b981', '#f59e0b', '#6366f1'],
+            colors: ['#06b6d4', '#f59e0b', '#10b981'],
             stroke: { show: false },
             dataLabels: { enabled: false },
             legend: { show: false },
@@ -645,7 +645,7 @@
                 toolbar: { show: false },
                 background: 'transparent'
             },
-            colors: ['#10b981'],
+            colors: ['#3b82f6'],
             plotOptions: {
                 bar: { borderRadius: 4, columnWidth: '40%' }
             },
@@ -697,9 +697,9 @@
         function switchView(viewName) {
             // Update Sidebar State
             if (viewName === 'dashboard') {
-                navDashboard.classList.add('text-emerald-400', 'bg-emerald-500/10');
+                navDashboard.classList.add('text-blue-400', 'bg-blue-500/10');
                 navDashboard.classList.remove('text-slate-600');
-                navFrota.classList.remove('text-emerald-400', 'bg-emerald-500/10');
+                navFrota.classList.remove('text-blue-400', 'bg-blue-500/10');
                 navFrota.classList.add('text-slate-600');
                 
                 // Content
@@ -711,9 +711,9 @@
                 pageSubtitle.innerText = "Resultados e Métricas";
                 
             } else if (viewName === 'frota') {
-                navFrota.classList.add('text-emerald-400', 'bg-emerald-500/10');
+                navFrota.classList.add('text-blue-400', 'bg-blue-500/10');
                 navFrota.classList.remove('text-slate-600');
-                navDashboard.classList.remove('text-emerald-400', 'bg-emerald-500/10');
+                navDashboard.classList.remove('text-blue-400', 'bg-blue-500/10');
                 navDashboard.classList.add('text-slate-600');
                 
                 // Content

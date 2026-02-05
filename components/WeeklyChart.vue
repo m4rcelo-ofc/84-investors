@@ -20,7 +20,7 @@ const chartOptions = computed(() => ({
     toolbar: { show: false },
     background: 'transparent',
   },
-  colors: ['#10b981'],
+  colors: ['#3b82f6'],
   plotOptions: {
     bar: { borderRadius: 4, columnWidth: '40%' },
   },
@@ -55,7 +55,7 @@ const formatCurrency = (value: number) => {
       <h3
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
-        <History class="text-emerald-500 w-4 h-4" />
+        <History class="text-blue-500 w-4 h-4" />
         Fluxo Semanal
       </h3>
     </div>
@@ -84,7 +84,7 @@ const formatCurrency = (value: number) => {
         <p class="text-[10px] text-slate-500 font-black uppercase mb-1">
           Ciclo Anterior
         </p>
-        <p class="text-lg font-bold text-emerald-400 tracking-tighter">
+        <p class="text-lg font-bold text-blue-400 tracking-tighter">
           R$ {{ formatCurrency(comparativeRevenue) }}
         </p>
       </div>
