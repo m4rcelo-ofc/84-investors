@@ -15,7 +15,7 @@ const {
   totalRevenue,
   comparativeRevenue,
   revenueByPlate,
-  formatCycleDate,
+  formatCycleMonth,
   clearDashboard,
 } = useDashboard();
 const {
@@ -234,7 +234,7 @@ const topMotos = computed(() => {
                   type="payment"
                   label="Ciclo Atual"
                   :value="`Ciclo ${cycleInfo.number}`"
-                  :subtext="`${formatCycleDate(cycleInfo.start)} - ${formatCycleDate(cycleInfo.end)}`"
+                  :subtext="formatCycleMonth(cycleInfo.start, cycleInfo.end)"
                 />
               </div>
 

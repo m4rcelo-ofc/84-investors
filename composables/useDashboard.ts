@@ -161,11 +161,29 @@ export const useDashboard = () => {
     }));
   });
 
-  // Formatar data do ciclo
-  const formatCycleDate = (dateStr: string) => {
-    if (!dateStr) return "";
-    const date = new Date(dateStr + "T00:00:00");
-    return date.toLocaleDateString("pt-BR");
+  // Retorna o nome do mês que possui a maior parte dos dias do ciclo
+  const formatCycleMonth = (startStr: string, endStr: string) => {
+    if (!startStr || !endStr) return "";
+    const start = new Date(startStr + "T00:00:00");
+    const end = new Date(endStr + "T00:00:00");
+
+    const monthDays: Record<string, number> = {};
+    const current = new Date(start);
+    while (current <= end) {
+      const key = `${current.getFullYear()}-${current.getMonth()}`;
+      monthDays[key] = (monthDays[key] || 0) + 1;
+      current.setDate(current.getDate() + 1);
+    }
+
+    let maxKey = Object.keys(monthDays)[0];
+    for (const key in monthDays) {
+      if (monthDays[key] > monthDays[maxKey]) maxKey = key;
+    }
+
+    const [year, month] = maxKey.split("-").map(Number);
+    const date = new Date(year, month, 1);
+    const name = date.toLocaleDateString("pt-BR", { month: "long" });
+    return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
   // Limpar dados ao fazer logout
@@ -186,7 +204,7 @@ export const useDashboard = () => {
     totalRevenue,
     comparativeRevenue,
     revenueByPlate,
-    formatCycleDate,
+    formatCycleMonth,
     clearDashboard,
   };
 };
