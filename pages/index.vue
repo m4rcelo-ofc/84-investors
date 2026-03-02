@@ -18,12 +18,9 @@ const {
   formatMonthDate,
   clearDashboard,
 } = useDashboard();
-const {
-  fleetData,
-  fetchFleet,
-  clearFleet,
-} = useFleet();
-const { isOpen, selectedVehicle, isAnimating, openModal, closeModal } = useModal();
+const { fleetData, fetchFleet, clearFleet } = useFleet();
+const { isOpen, selectedVehicle, isAnimating, openModal, closeModal } =
+  useModal();
 
 // Referência para o componente de login
 const loginScreenRef = ref<{
@@ -142,7 +139,9 @@ const filteredVehicles = computed(() => {
 
   // Filtrar por status
   if (statusFilter.value) {
-    vehicles = vehicles.filter((vehicle) => vehicle.status === statusFilter.value);
+    vehicles = vehicles.filter(
+      (vehicle) => vehicle.status === statusFilter.value,
+    );
   }
 
   // Filtrar por busca
@@ -228,13 +227,30 @@ const topMotos = computed(() => {
                   type="contract"
                   label="Início do Contrato"
                   :value="contractInfo.startDate"
-                  :subtext="contractInfo.months != null ? `Contrato: ${contractInfo.months} meses` : undefined"
+                  :subtext="
+                    contractInfo.months != null
+                      ? `Contrato: ${contractInfo.months} meses`
+                      : undefined
+                  "
                 />
                 <StatsCard
                   type="payment"
                   label="Mês Atual"
-                  :value="monthInfo.year_month ? new Date(monthInfo.year_month + '-01').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : ''"
-                  :subtext="monthInfo.start ? `${formatMonthDate(monthInfo.start)} - ${formatMonthDate(monthInfo.end)}` : undefined"
+                  :value="
+                    monthInfo.year_month
+                      ? new Date(
+                          monthInfo.year_month + '-01',
+                        ).toLocaleDateString('pt-BR', {
+                          month: 'long',
+                          year: 'numeric',
+                        })
+                      : ''
+                  "
+                  :subtext="
+                    monthInfo.start
+                      ? `${formatMonthDate(monthInfo.start)} - ${formatMonthDate(monthInfo.end)}`
+                      : undefined
+                  "
                 />
               </div>
 
@@ -332,9 +348,7 @@ const topMotos = computed(() => {
                 v-if="filteredVehicles.length === 0"
                 class="text-center py-16"
               >
-                <p class="text-slate-500 text-sm">
-                  Nenhum veículo encontrado.
-                </p>
+                <p class="text-slate-500 text-sm">Nenhum veículo encontrado.</p>
               </div>
             </div>
           </div>
