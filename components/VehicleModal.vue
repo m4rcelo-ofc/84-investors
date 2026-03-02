@@ -1,70 +1,63 @@
 <script setup lang="ts">
-import { X, Camera } from "lucide-vue-next";
-import type { Vehicle } from "~/types";
+import { computed } from 'vue'
+import { X, Camera } from 'lucide-vue-next'
+import type { Vehicle } from '~/types'
+import { useFleet } from '~/composables/useFleet'
+import { useMotoData } from '~/composables/useMotoData'
 
 interface Props {
-  isOpen: boolean;
-  isAnimating: boolean;
-  vehicle: Vehicle | null;
+  isOpen: boolean
+  isAnimating: boolean
+  vehicle: Vehicle | null
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
+const emit = defineEmits<{ close: [] }>()
 
-const emit = defineEmits<{
-  close: [];
-}>();
+const { translateStatus } = useFleet()
+const { formatCurrency } = useMotoData()
 
-const { translateStatus } = useFleet();
-const { formatCurrency } = useMotoData();
+const storageBaseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '')
 
-// Calcular porcentagem
 const percentage = computed(() => {
-  if (!props.vehicle) return 0;
+  if (!props.vehicle) return 0
   if (!props.vehicle.expected_amount || props.vehicle.expected_amount === 0) {
-    return props.vehicle.paid_amount > 0 ? 100 : 0;
+    return props.vehicle.paid_amount > 0 ? 100 : 0
   }
   return Math.min(
     Math.round((props.vehicle.paid_amount / props.vehicle.expected_amount) * 100),
-    100
-  );
-});
+    100,
+  )
+})
 
-// URL da imagem
-const imageUrl = computed(() => {
-  if (props.vehicle?.image) {
-    return `http://localhost:8000/storage/${props.vehicle.image}`;
-  }
-  return null;
-});
+const imageUrl = computed(() =>
+  props.vehicle?.image ? `${storageBaseUrl}/storage/${props.vehicle.image}` : null,
+)
 
-// Status traduzido
 const displayStatus = computed(() => {
-  if (!props.vehicle) return "";
-  return translateStatus(props.vehicle.status);
-});
+  if (!props.vehicle) return ''
+  return translateStatus(props.vehicle.status)
+})
 
-// Classes do status
 const statusClasses = computed(() => {
-  if (!props.vehicle) return "";
+  if (!props.vehicle) return ''
   switch (props.vehicle.status) {
-    case "rented":
-      return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
-    case "maintenance":
-      return "bg-amber-500/10 text-amber-400 border-amber-500/20";
-    case "unavailable":
-      return "bg-red-500/10 text-red-400 border-red-500/20";
-    case "available":
-      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    case 'rented':
+      return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+    case 'maintenance':
+      return 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+    case 'unavailable':
+      return 'bg-red-500/10 text-red-400 border-red-500/20'
+    case 'available':
+      return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
     default:
-      return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+      return 'bg-slate-500/10 text-slate-400 border-slate-500/20'
   }
-});
+})
 
 const handleBackdropClick = (e: MouseEvent) => {
-  if (e.target === e.currentTarget) {
-    emit("close");
-  }
-};
+  if (e.target === e.currentTarget) emit('close')
+}
 </script>
 
 <template>
@@ -88,15 +81,8 @@ const handleBackdropClick = (e: MouseEvent) => {
 
         <template v-if="vehicle">
           <div class="flex items-center gap-4 mb-6">
-            <div
-              v-if="imageUrl"
-              class="w-16 h-16 rounded-2xl overflow-hidden"
-            >
-              <img
-                :src="imageUrl"
-                :alt="vehicle.model"
-                class="w-full h-full object-cover"
-              />
+            <div v-if="imageUrl" class="w-16 h-16 rounded-2xl overflow-hidden">
+              <img :src="imageUrl" :alt="vehicle.model" class="w-full h-full object-cover" />
             </div>
             <div
               v-else
@@ -108,15 +94,12 @@ const handleBackdropClick = (e: MouseEvent) => {
               <h3 class="text-xl font-bold text-white uppercase italic">
                 {{ vehicle.brand }} {{ vehicle.model }}
               </h3>
-              <p
-                class="text-blue-500 text-xs font-mono font-bold tracking-widest mt-1"
-              >
+              <p class="text-blue-500 text-xs font-mono font-bold tracking-widest mt-1">
                 {{ vehicle.license_plate }}
               </p>
             </div>
           </div>
 
-          <!-- Status Badge -->
           <div class="mb-4">
             <span
               class="px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider border"
@@ -127,7 +110,6 @@ const handleBackdropClick = (e: MouseEvent) => {
           </div>
 
           <div class="space-y-4">
-            <!-- Informações básicas -->
             <div class="grid grid-cols-2 gap-4">
               <div class="p-3 bg-slate-950/50 rounded-xl border border-slate-800">
                 <p class="text-[10px] text-slate-500 font-bold uppercase">Ano</p>
@@ -139,7 +121,6 @@ const handleBackdropClick = (e: MouseEvent) => {
               </div>
             </div>
 
-            <!-- Documentação -->
             <div class="grid grid-cols-1 gap-4">
               <div class="p-3 bg-slate-950/50 rounded-xl border border-slate-800">
                 <p class="text-[10px] text-slate-500 font-bold uppercase">Renavam</p>
@@ -151,10 +132,7 @@ const handleBackdropClick = (e: MouseEvent) => {
               </div>
             </div>
 
-            <!-- Financeiro -->
-            <div
-              class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl"
-            >
+            <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl">
               <div class="flex justify-between items-center mb-2">
                 <span class="text-xs font-bold text-slate-400">Meta do Ciclo</span>
                 <span class="text-white font-bold">
@@ -167,9 +145,7 @@ const handleBackdropClick = (e: MouseEvent) => {
                   R$ {{ formatCurrency(vehicle.paid_amount) }}
                 </span>
               </div>
-              <div
-                class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden"
-              >
+              <div class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden">
                 <div
                   class="h-full bg-blue-500 transition-all duration-500"
                   :style="{ width: `${percentage}%` }"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { History } from 'lucide-vue-next'
 import type { WeeklyData } from '~/types'
 
@@ -26,27 +27,26 @@ const chartOptions = computed(() => ({
   },
   dataLabels: { enabled: false },
   xaxis: {
-    categories: props.data.map(d => d.x),
+    categories: props.data.map((d) => d.x),
     axisBorder: { show: false },
     axisTicks: { show: false },
     labels: { style: { colors: '#64748b', fontSize: '10px' } },
   },
   yaxis: { show: false },
   grid: { show: false },
-  tooltip: { theme: 'dark' },
+  tooltip: {
+    theme: 'dark',
+    y: {
+      formatter: (val: number) =>
+        `R$ ${val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    },
+  },
 }))
 
-const series = computed(() => [
-  {
-    name: 'Valor',
-    data: props.data.map(d => d.y),
-  },
-])
+const series = computed(() => [{ name: 'Valor', data: props.data.map((d) => d.y) }])
 
-// Formatar valor em reais
-const formatCurrency = (value: number) => {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-}
+const formatCurrency = (value: number) =>
+  value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 </script>
 
 <template>
@@ -61,29 +61,18 @@ const formatCurrency = (value: number) => {
     </div>
 
     <div class="w-full h-[200px]">
-      <ClientOnly>
-        <apexchart
-          type="bar"
-          height="200"
-          :options="chartOptions"
-          :series="series"
-        />
-      </ClientOnly>
+      <apexchart type="bar" height="200" :options="chartOptions" :series="series" />
     </div>
 
     <div class="mt-8 pt-6 border-t border-slate-800/60 flex justify-between">
       <div>
-        <p class="text-[10px] text-slate-500 font-black uppercase mb-1">
-          Ciclo Atual
-        </p>
+        <p class="text-[10px] text-slate-500 font-black uppercase mb-1">Mês Atual</p>
         <p class="text-lg font-bold text-white tracking-tighter">
           R$ {{ formatCurrency(totalRevenue) }}
         </p>
       </div>
       <div class="text-right">
-        <p class="text-[10px] text-slate-500 font-black uppercase mb-1">
-          Ciclo Anterior
-        </p>
+        <p class="text-[10px] text-slate-500 font-black uppercase mb-1">Mês Anterior</p>
         <p class="text-lg font-bold text-blue-400 tracking-tighter">
           R$ {{ formatCurrency(comparativeRevenue) }}
         </p>

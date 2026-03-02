@@ -1,71 +1,65 @@
 <script setup lang="ts">
-import { Camera, Info } from "lucide-vue-next";
-import type { Vehicle } from "~/types";
+import { computed } from 'vue'
+import { Camera, Info } from 'lucide-vue-next'
+import type { Vehicle } from '~/types'
+import { useFleet } from '~/composables/useFleet'
+import { useMotoData } from '~/composables/useMotoData'
 
 interface Props {
-  vehicle: Vehicle;
+  vehicle: Vehicle
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
+const emit = defineEmits<{ 'open-modal': [vehicle: Vehicle] }>()
 
-const emit = defineEmits<{
-  "open-modal": [vehicle: Vehicle];
-}>();
+const { translateStatus } = useFleet()
+const { formatCurrency } = useMotoData()
 
-const { translateStatus } = useFleet();
-const { formatCurrency } = useMotoData();
+const storageBaseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '')
 
-// Traduzir status para exibição
-const displayStatus = computed(() => translateStatus(props.vehicle.status));
+const displayStatus = computed(() => translateStatus(props.vehicle.status))
 
-// Classes do status
 const statusClasses = computed(() => {
   switch (props.vehicle.status) {
-    case "rented":
-      return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
-    case "maintenance":
-      return "bg-amber-500/10 text-amber-400 border-amber-500/20";
-    case "unavailable":
-      return "bg-red-500/10 text-red-400 border-red-500/20";
-    case "available":
-      return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    case 'rented':
+      return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+    case 'maintenance':
+      return 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+    case 'unavailable':
+      return 'bg-red-500/10 text-red-400 border-red-500/20'
+    case 'available':
+      return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
     default:
-      return "bg-slate-500/10 text-slate-400 border-slate-500/20";
+      return 'bg-slate-500/10 text-slate-400 border-slate-500/20'
   }
-});
+})
 
-// Cor da barra de progresso
 const barColorClass = computed(() => {
   switch (props.vehicle.status) {
-    case "rented":
-      return "bg-cyan-500";
-    case "maintenance":
-      return "bg-amber-500";
-    case "unavailable":
-      return "bg-red-500";
+    case 'rented':
+      return 'bg-cyan-500'
+    case 'maintenance':
+      return 'bg-amber-500'
+    case 'unavailable':
+      return 'bg-red-500'
     default:
-      return "bg-emerald-500";
+      return 'bg-emerald-500'
   }
-});
+})
 
-// Calcular porcentagem de pagamento
 const percentage = computed(() => {
   if (!props.vehicle.expected_amount || props.vehicle.expected_amount === 0) {
-    return props.vehicle.paid_amount > 0 ? 100 : 0;
+    return props.vehicle.paid_amount > 0 ? 100 : 0
   }
   return Math.min(
     Math.round((props.vehicle.paid_amount / props.vehicle.expected_amount) * 100),
-    100
-  );
-});
+    100,
+  )
+})
 
-// URL da imagem
-const imageUrl = computed(() => {
-  if (props.vehicle.image) {
-    return `http://localhost:8000/storage/${props.vehicle.image}`;
-  }
-  return null;
-});
+const imageUrl = computed(() =>
+  props.vehicle.image ? `${storageBaseUrl}/storage/${props.vehicle.image}` : null,
+)
 </script>
 
 <template>
@@ -75,15 +69,8 @@ const imageUrl = computed(() => {
     <div class="p-6">
       <div class="flex justify-between items-start mb-6">
         <div class="flex gap-3">
-          <div
-            v-if="imageUrl"
-            class="w-10 h-10 rounded-xl overflow-hidden shrink-0"
-          >
-            <img
-              :src="imageUrl"
-              :alt="vehicle.model"
-              class="w-full h-full object-cover"
-            />
+          <div v-if="imageUrl" class="w-10 h-10 rounded-xl overflow-hidden shrink-0">
+            <img :src="imageUrl" :alt="vehicle.model" class="w-full h-full object-cover" />
           </div>
           <div
             v-else
@@ -92,9 +79,7 @@ const imageUrl = computed(() => {
             <Camera class="w-5 h-5" />
           </div>
           <div>
-            <h4
-              class="text-white font-bold text-sm tracking-tight uppercase leading-snug"
-            >
+            <h4 class="text-white font-bold text-sm tracking-tight uppercase leading-snug">
               {{ vehicle.brand }} {{ vehicle.model }}
             </h4>
             <p
@@ -114,9 +99,7 @@ const imageUrl = computed(() => {
 
       <div class="space-y-4">
         <div class="flex justify-between items-end">
-          <span
-            class="text-[10px] font-black text-slate-500 uppercase tracking-widest"
-          >
+          <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
             Recebimento
           </span>
           <span class="text-base font-bold text-blue-400">
@@ -138,12 +121,11 @@ const imageUrl = computed(() => {
         </div>
       </div>
     </div>
+
     <div
       class="px-6 py-4 bg-slate-800/20 border-t border-slate-800/60 flex justify-between items-center"
     >
-      <span
-        class="text-[9px] text-slate-500 font-bold uppercase tracking-widest"
-      >
+      <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
         Detalhes do Veículo
       </span>
       <button

@@ -1,26 +1,27 @@
-import type { Vehicle } from "~/types";
+import { ref } from 'vue'
+import type { Vehicle } from '~/types'
+
+// Module-level singleton state
+const isOpen = ref(false)
+const selectedVehicle = ref<Vehicle | null>(null)
+const isAnimating = ref(false)
 
 export const useModal = () => {
-  const isOpen = useState<boolean>("modalOpen", () => false);
-  const selectedVehicle = useState<Vehicle | null>("selectedVehicle", () => null);
-  const isAnimating = ref(false);
-
   const openModal = (vehicle: Vehicle) => {
-    selectedVehicle.value = vehicle;
-    isOpen.value = true;
-    // Small delay for animation
+    selectedVehicle.value = vehicle
+    isOpen.value = true
     setTimeout(() => {
-      isAnimating.value = true;
-    }, 10);
-  };
+      isAnimating.value = true
+    }, 10)
+  }
 
   const closeModal = () => {
-    isAnimating.value = false;
+    isAnimating.value = false
     setTimeout(() => {
-      isOpen.value = false;
-      selectedVehicle.value = null;
-    }, 300);
-  };
+      isOpen.value = false
+      selectedVehicle.value = null
+    }, 300)
+  }
 
   return {
     isOpen,
@@ -28,5 +29,5 @@ export const useModal = () => {
     isAnimating,
     openModal,
     closeModal,
-  };
-};
+  }
+}

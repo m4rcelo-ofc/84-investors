@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { TrendingUp } from 'lucide-vue-next'
 import type { DailyData } from '~/types'
 
@@ -13,7 +14,6 @@ const props = withDefaults(defineProps<Props>(), {
   comparativeRevenue: 0,
 })
 
-// Calcular variação percentual
 const revenueChange = computed(() => {
   if (!props.comparativeRevenue || props.comparativeRevenue === 0) return 0
   return ((props.totalRevenue - props.comparativeRevenue) / props.comparativeRevenue) * 100
@@ -25,9 +25,7 @@ const revenueChangeFormatted = computed(() => {
   return `${sign}${value.toFixed(1)}%`
 })
 
-const revenueDifference = computed(() => {
-  return props.totalRevenue - props.comparativeRevenue
-})
+const revenueDifference = computed(() => props.totalRevenue - props.comparativeRevenue)
 
 const chartOptions = computed(() => ({
   chart: {
@@ -50,7 +48,7 @@ const chartOptions = computed(() => ({
   dataLabels: { enabled: false },
   stroke: { curve: 'smooth', width: 2 },
   xaxis: {
-    categories: props.data.map(d => d.day),
+    categories: props.data.map((d) => d.day),
     axisBorder: { show: false },
     axisTicks: { show: false },
     labels: { style: { colors: '#64748b', fontSize: '10px' } },
@@ -71,17 +69,10 @@ const chartOptions = computed(() => ({
   tooltip: { theme: 'dark' },
 }))
 
-const series = computed(() => [
-  {
-    name: 'Recebimentos',
-    data: props.data.map(d => d.valor),
-  },
-])
+const series = computed(() => [{ name: 'Recebimentos', data: props.data.map((d) => d.valor) }])
 
-// Formatar valor em reais
-const formatCurrency = (value: number) => {
-  return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-}
+const formatCurrency = (value: number) =>
+  value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 </script>
 
 <template>
@@ -91,28 +82,18 @@ const formatCurrency = (value: number) => {
         class="text-slate-400 font-semibold text-sm flex items-center gap-2 tracking-wide uppercase"
       >
         <TrendingUp class="text-blue-500 w-4 h-4" />
-        Desempenho Diário do Ciclo
+        Desempenho Diário do Mês
       </h3>
     </div>
 
-    <!-- ApexChart Container -->
-    <ClientOnly>
-      <apexchart
-        type="area"
-        height="320"
-        :options="chartOptions"
-        :series="series"
-      />
-    </ClientOnly>
+    <apexchart type="area" height="320" :options="chartOptions" :series="series" />
 
     <div
       class="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between p-5 bg-slate-950/40 rounded-2xl border border-slate-800/60"
     >
       <div>
-        <span
-          class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1 block"
-        >
-          Total Consolidado (Ciclo)
+        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1 block">
+          Total Consolidado (Mês)
         </span>
         <div class="flex items-baseline gap-2">
           <span class="text-2xl font-bold text-white">R$ {{ formatCurrency(totalRevenue) }}</span>
@@ -124,18 +105,17 @@ const formatCurrency = (value: number) => {
           </span>
         </div>
       </div>
-      <div
-        class="mt-4 md:mt-0 p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl max-w-sm"
-      >
+      <div class="mt-4 md:mt-0 p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl max-w-sm">
         <p class="text-[9px] text-blue-500 font-bold uppercase tracking-wider">
-          Comparativo vs Ciclo Anterior
+          Comparativo vs Mês Anterior
         </p>
         <p class="text-xs text-slate-400 mt-1">
           <template v-if="revenueDifference >= 0">
-            Crescimento de R$ {{ formatCurrency(revenueDifference) }} em relação ao período passado.
+            Crescimento de R$ {{ formatCurrency(revenueDifference) }} em relação ao mês anterior.
           </template>
           <template v-else>
-            Redução de R$ {{ formatCurrency(Math.abs(revenueDifference)) }} em relação ao período passado.
+            Redução de R$ {{ formatCurrency(Math.abs(revenueDifference)) }} em relação ao mês
+            anterior.
           </template>
         </p>
       </div>

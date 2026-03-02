@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-vue-next'
 
-const emit = defineEmits<{
-  login: [email: string, password: string]
-}>()
+const emit = defineEmits<{ login: [email: string, password: string] }>()
 
 const email = ref('')
 const password = ref('')
@@ -16,7 +15,6 @@ const handleSubmit = async () => {
     errorMessage.value = 'Preencha todos os campos'
     return
   }
-
   isLoading.value = true
   errorMessage.value = ''
   emit('login', email.value, password.value)
@@ -26,7 +24,6 @@ const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
 
-// Expor método para receber erro do componente pai
 defineExpose({
   setError: (error: string) => {
     errorMessage.value = error
@@ -34,7 +31,7 @@ defineExpose({
   },
   setLoading: (loading: boolean) => {
     isLoading.value = loading
-  }
+  },
 })
 </script>
 
@@ -42,7 +39,6 @@ defineExpose({
   <div
     class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950 transition-opacity duration-500"
   >
-    <!-- Background Decor -->
     <div
       class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"
     />
@@ -64,7 +60,6 @@ defineExpose({
 
       <div class="glass-panel rounded-3xl p-8 shadow-2xl">
         <form class="space-y-6" @submit.prevent="handleSubmit">
-          <!-- Error Message -->
           <div
             v-if="errorMessage"
             class="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-400 text-sm text-center"
@@ -73,15 +68,11 @@ defineExpose({
           </div>
 
           <div class="space-y-2">
-            <label
-              class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1"
-            >
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
               E-mail
             </label>
             <div class="relative">
-              <Mail
-                class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"
-              />
+              <Mail class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" />
               <input
                 v-model="email"
                 type="email"
@@ -93,15 +84,11 @@ defineExpose({
           </div>
 
           <div class="space-y-2">
-            <label
-              class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1"
-            >
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
               Senha
             </label>
             <div class="relative">
-              <Lock
-                class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5"
-              />
+              <Lock class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" />
               <input
                 v-model="password"
                 :type="showPassword ? 'text' : 'password'"
@@ -131,9 +118,7 @@ defineExpose({
           </button>
         </form>
       </div>
-      <p
-        class="text-center mt-8 text-slate-600 text-sm font-bold uppercase tracking-widest"
-      >
+      <p class="text-center mt-8 text-slate-600 text-sm font-bold uppercase tracking-widest">
         84 Capital © 2024
       </p>
     </div>

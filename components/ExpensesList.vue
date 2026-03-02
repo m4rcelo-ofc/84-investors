@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Receipt, ArrowDownRight } from 'lucide-vue-next'
 import type { Expense } from '~/types'
+import { useMotoData } from '~/composables/useMotoData'
 
 interface Props {
   expenses: Expense[]
@@ -36,13 +37,9 @@ const { formatCurrency } = useMotoData()
           <p class="text-xs font-bold text-slate-200 uppercase tracking-tight">
             {{ expense.title }}
           </p>
-          <p class="text-[10px] text-slate-500 font-medium">
-            {{ expense.date }}
-          </p>
+          <p class="text-[10px] text-slate-500 font-medium">{{ expense.date }}</p>
         </div>
-        <p class="text-sm font-bold text-rose-400">
-          - R$ {{ formatCurrency(expense.amount) }}
-        </p>
+        <p class="text-sm font-bold text-rose-400">- R$ {{ formatCurrency(expense.amount) }}</p>
       </div>
     </div>
   </div>

@@ -1,14 +1,3 @@
-export interface Moto {
-  id: number
-  plate: string
-  received: number
-  target: number
-  status: 'Alugada' | 'Manutenção' | 'Disponível' | 'Indisponível'
-  model: string
-  year: number
-  color: string
-}
-
 export interface Vehicle {
   vehicle_id: number
   license_plate: string
