@@ -5,8 +5,8 @@ interface VehicleStats {
   maintenance: number;
 }
 
-interface CycleInfo {
-  number: number;
+interface MonthInfo {
+  year_month: string;
   start: string;
   end: string;
 }
@@ -39,7 +39,7 @@ interface DashboardData {
   vehicle_stats: VehicleStats;
   contract_start_date: string;
   contract_end_date: string;
-  cycle_info: CycleInfo;
+  month_info: MonthInfo;
   financials: Financials;
   comparative: Comparative;
 }
@@ -92,11 +92,11 @@ export const useDashboard = () => {
     };
   });
 
-  const cycleInfo = computed(() => {
+  const monthInfo = computed(() => {
     if (!dashboardData.value) {
-      return { number: 0, start: "", end: "" };
+      return { year_month: "", start: "", end: "" };
     }
-    return dashboardData.value.cycle_info;
+    return dashboardData.value.month_info;
   });
 
   const contractInfo = computed(() => {
@@ -161,14 +161,12 @@ export const useDashboard = () => {
     }));
   });
 
-  // Formatar data do ciclo
-  const formatCycleDate = (dateStr: string) => {
+  const formatMonthDate = (dateStr: string) => {
     if (!dateStr) return "";
     const date = new Date(dateStr + "T00:00:00");
     return date.toLocaleDateString("pt-BR");
   };
 
-  // Limpar dados ao fazer logout
   const clearDashboard = () => {
     dashboardData.value = null;
   };
@@ -179,14 +177,14 @@ export const useDashboard = () => {
     error,
     fetchDashboard,
     vehicleStats,
-    cycleInfo,
+    monthInfo,
     contractInfo,
     dailyData,
     weeklyData,
     totalRevenue,
     comparativeRevenue,
     revenueByPlate,
-    formatCycleDate,
+    formatMonthDate,
     clearDashboard,
   };
 };

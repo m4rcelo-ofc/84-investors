@@ -8,14 +8,14 @@ const { user } = useMotoData();
 const {
   fetchDashboard,
   vehicleStats,
-  cycleInfo,
+  monthInfo,
   contractInfo,
   dailyData,
   weeklyData,
   totalRevenue,
   comparativeRevenue,
   revenueByPlate,
-  formatCycleDate,
+  formatMonthDate,
   clearDashboard,
 } = useDashboard();
 const {
@@ -232,9 +232,9 @@ const topMotos = computed(() => {
                 />
                 <StatsCard
                   type="payment"
-                  label="Ciclo Atual"
-                  :value="`Ciclo ${cycleInfo.number}`"
-                  :subtext="`${formatCycleDate(cycleInfo.start)} - ${formatCycleDate(cycleInfo.end)}`"
+                  label="Mês Atual"
+                  :value="monthInfo.year_month ? new Date(monthInfo.year_month + '-01').toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : ''"
+                  :subtext="monthInfo.start ? `${formatMonthDate(monthInfo.start)} - ${formatMonthDate(monthInfo.end)}` : undefined"
                 />
               </div>
 
