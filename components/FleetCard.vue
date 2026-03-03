@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { Camera, Info } from 'lucide-vue-next'
 import type { Vehicle } from '~/types'
 import { useFleet } from '~/composables/useFleet'
-import { useMotoData } from '~/composables/useMotoData'
 
 interface Props {
   vehicle: Vehicle
@@ -13,7 +12,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<{ 'open-modal': [vehicle: Vehicle] }>()
 
 const { translateStatus } = useFleet()
-const { formatCurrency } = useMotoData()
 
 const storageBaseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '')
 
@@ -47,19 +45,12 @@ const barColorClass = computed(() => {
   }
 })
 
-const percentage = computed(() => {
-  if (!props.vehicle.expected_amount || props.vehicle.expected_amount === 0) {
-    return props.vehicle.paid_amount > 0 ? 100 : 0
-  }
-  return Math.min(
-    Math.round((props.vehicle.paid_amount / props.vehicle.expected_amount) * 100),
-    100,
-  )
-})
-
 const imageUrl = computed(() =>
   props.vehicle.image ? `${storageBaseUrl}/storage/${props.vehicle.image}` : null,
 )
+
+const formatCurrency = (value: number) =>
+  value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 </script>
 
 <template>
@@ -97,27 +88,24 @@ const imageUrl = computed(() =>
         </div>
       </div>
 
-      <div class="space-y-4">
+      <div class="space-y-3">
         <div class="flex justify-between items-end">
           <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-            Recebimento
+            A Receber
           </span>
           <span class="text-base font-bold text-blue-400">
-            R$ {{ formatCurrency(vehicle.paid_amount) }}
+            {{ formatCurrency(vehicle.a_receber) }}
           </span>
         </div>
         <div class="w-full h-2 bg-slate-800/60 rounded-full overflow-hidden">
           <div
             class="h-full rounded-full transition-all duration-1000"
             :class="barColorClass"
-            :style="{ width: `${percentage}%` }"
+            :style="{ width: `${vehicle.bar_pct}%` }"
           />
         </div>
-        <div class="flex justify-between text-[10px] text-slate-500">
+        <div class="text-[10px] text-slate-500">
           <span>{{ vehicle.year }} • {{ vehicle.color || 'N/A' }}</span>
-          <span v-if="vehicle.expected_amount > 0">
-            Meta: R$ {{ formatCurrency(vehicle.expected_amount) }}
-          </span>
         </div>
       </div>
     </div>

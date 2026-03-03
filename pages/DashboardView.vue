@@ -2,8 +2,6 @@
 import { computed, onMounted } from 'vue'
 import AppHeader from '~/components/AppHeader.vue'
 import StatsCard from '~/components/StatsCard.vue'
-import DailyChart from '~/components/DailyChart.vue'
-import WeeklyChart from '~/components/WeeklyChart.vue'
 import FleetStatusChart from '~/components/FleetStatusChart.vue'
 import VehicleList from '~/components/VehicleList.vue'
 import { useAuth } from '~/composables/useAuth'
@@ -18,12 +16,8 @@ const {
   vehicleStats,
   monthInfo,
   contractInfo,
-  dailyData,
-  weeklyData,
   totalRevenue,
-  comparativeRevenue,
   revenueByPlate,
-  formatMonthDate,
 } = useDashboard()
 const { selectedMonth, availableMonths, setMonth } = useMonthFilter()
 
@@ -50,6 +44,22 @@ const userInitials = computed(() => {
   }
   return user.value.initials
 })
+
+const formattedTotalRevenue = computed(() =>
+  totalRevenue.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+)
+
+const currentMonthLabel = computed(() => {
+  if (!monthInfo.value.year_month) return ''
+  return new Date(monthInfo.value.year_month + '-01T00:00:00').toLocaleDateString('pt-BR', {
+    month: 'long',
+    year: 'numeric',
+  })
+})
+
+const contractStartSubtext = computed(() =>
+  contractInfo.value.startDate ? `Início do contrato: ${contractInfo.value.startDate}` : undefined,
+)
 </script>
 
 <template>
@@ -80,56 +90,25 @@ const userInitials = computed(() => {
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <StatsCard
-        type="contract"
-        label="Início do Contrato"
-        :value="contractInfo.startDate"
-        :subtext="
-          contractInfo.months != null ? `Contrato: ${contractInfo.months} meses` : undefined
-        "
+        type="investment"
+        label="Valor a Receber"
+        :value="formattedTotalRevenue"
       />
       <StatsCard
         type="payment"
         label="Mês Atual"
-        :value="
-          monthInfo.year_month
-            ? new Date(monthInfo.year_month + '-01T00:00:00').toLocaleDateString('pt-BR', {
-                month: 'long',
-                year: 'numeric',
-              })
-            : ''
-        "
-        :subtext="
-          monthInfo.start
-            ? `${formatMonthDate(monthInfo.start)} - ${formatMonthDate(monthInfo.end)}`
-            : undefined
-        "
+        :value="currentMonthLabel"
+        :subtext="contractStartSubtext"
       />
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-      <div class="md:col-span-8">
-        <DailyChart
-          :data="dailyData"
-          :total-revenue="totalRevenue"
-          :comparative-revenue="comparativeRevenue"
-        />
-      </div>
-      <div class="md:col-span-4">
-        <FleetStatusChart
-          :alugadas="vehicleStats.rented"
-          :manutencao="vehicleStats.maintenance"
-          :disponiveis="vehicleStats.available"
-          :indisponiveis="vehicleStats.unavailable"
-        />
-      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10">
       <VehicleList :vehicles="revenueByPlate" />
-      <WeeklyChart
-        :data="weeklyData"
-        :total-revenue="totalRevenue"
-        :comparative-revenue="comparativeRevenue"
+      <FleetStatusChart
+        :alugadas="vehicleStats.rented"
+        :manutencao="vehicleStats.maintenance"
+        :disponiveis="vehicleStats.available"
+        :indisponiveis="vehicleStats.unavailable"
       />
     </div>
   </div>

@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { X, Camera } from 'lucide-vue-next'
 import type { Vehicle } from '~/types'
 import { useFleet } from '~/composables/useFleet'
-import { useMotoData } from '~/composables/useMotoData'
 
 interface Props {
   isOpen: boolean
@@ -15,20 +14,11 @@ const props = defineProps<Props>()
 const emit = defineEmits<{ close: [] }>()
 
 const { translateStatus } = useFleet()
-const { formatCurrency } = useMotoData()
+
+const formatCurrency = (value: number) =>
+  value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 const storageBaseUrl = import.meta.env.VITE_API_URL.replace('/api/v1', '')
-
-const percentage = computed(() => {
-  if (!props.vehicle) return 0
-  if (!props.vehicle.expected_amount || props.vehicle.expected_amount === 0) {
-    return props.vehicle.paid_amount > 0 ? 100 : 0
-  }
-  return Math.min(
-    Math.round((props.vehicle.paid_amount / props.vehicle.expected_amount) * 100),
-    100,
-  )
-})
 
 const imageUrl = computed(() =>
   props.vehicle?.image ? `${storageBaseUrl}/storage/${props.vehicle.image}` : null,
@@ -133,22 +123,18 @@ const handleBackdropClick = (e: MouseEvent) => {
             </div>
 
             <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs font-bold text-slate-400">Meta do Ciclo</span>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                  A Receber
+                </span>
                 <span class="text-white font-bold">
-                  R$ {{ formatCurrency(vehicle.expected_amount) }}
+                  {{ formatCurrency(vehicle.a_receber) }}
                 </span>
               </div>
-              <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-slate-400">Realizado</span>
-                <span class="text-blue-400 font-bold">
-                  R$ {{ formatCurrency(vehicle.paid_amount) }}
-                </span>
-              </div>
-              <div class="w-full h-1.5 bg-slate-800 rounded-full mt-3 overflow-hidden">
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                 <div
                   class="h-full bg-blue-500 transition-all duration-500"
-                  :style="{ width: `${percentage}%` }"
+                  :style="{ width: `${vehicle.bar_pct}%` }"
                 />
               </div>
             </div>

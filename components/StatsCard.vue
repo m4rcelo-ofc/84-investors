@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Wallet, TrendingUp, Calendar, Clock, ArrowUpRight } from 'lucide-vue-next'
+import { Wallet, TrendingUp, Calendar, Clock, ArrowUpRight, ArrowDownRight } from 'lucide-vue-next'
 
 interface Props {
   type: 'investment' | 'rentability' | 'contract' | 'payment'
@@ -44,7 +44,8 @@ const iconComponents = {
         class="text-xs font-bold flex items-center"
         :class="trend.isPositive ? 'text-blue-400' : 'text-rose-400'"
       >
-        <ArrowUpRight class="w-3 h-3 mr-1" />
+        <ArrowUpRight v-if="trend.isPositive" class="w-3 h-3 mr-1" />
+        <ArrowDownRight v-else class="w-3 h-3 mr-1" />
         {{ trend.value }}
       </span>
       <span v-if="meta" class="text-slate-500 text-xs font-medium">

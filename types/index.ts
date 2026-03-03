@@ -9,18 +9,8 @@ export interface Vehicle {
   renavam: string
   chassi: string
   image: string | null
-  expected_amount: number
-  paid_amount: number
-}
-
-export interface DailyData {
-  day: number
-  valor: number
-}
-
-export interface WeeklyData {
-  x: string
-  y: number
+  a_receber: number
+  bar_pct: number
 }
 
 export interface Expense {

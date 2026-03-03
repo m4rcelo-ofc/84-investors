@@ -13,8 +13,8 @@ export interface Vehicle {
   renavam: string
   chassi: string
   image: string | null
-  expected_amount: number
-  paid_amount: number
+  a_receber: number
+  bar_pct: number
 }
 
 interface FleetResponse {

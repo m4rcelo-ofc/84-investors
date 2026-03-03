@@ -15,23 +15,9 @@ interface MonthInfo {
   end: string
 }
 
-interface DailyRevenue {
-  day_number: number
-  date: string
-  value: number
-}
-
-type WeeklyRevenue = Record<string, number>
-
 interface Financials {
   total_revenue: number
   by_plate: Record<string, number>
-  weekly_revenue: WeeklyRevenue
-  daily_revenue: DailyRevenue[]
-}
-
-interface Comparative {
-  total_revenue: number
 }
 
 interface DashboardData {
@@ -40,7 +26,6 @@ interface DashboardData {
   contract_end_date: string
   month_info: MonthInfo
   financials: Financials
-  comparative: Comparative
 }
 
 interface DashboardResponse {
@@ -116,25 +101,7 @@ export const useDashboard = () => {
     }
   })
 
-  const dailyData = computed(() => {
-    if (!dashboardData.value) return []
-    return dashboardData.value.financials.daily_revenue.map((d) => ({
-      day: d.day_number,
-      valor: d.value,
-    }))
-  })
-
-  const weeklyData = computed(() => {
-    if (!dashboardData.value) return []
-    return Object.entries(dashboardData.value.financials.weekly_revenue).map(([label, value]) => ({
-      x: label,
-      y: value,
-    }))
-  })
-
   const totalRevenue = computed(() => dashboardData.value?.financials.total_revenue ?? 0)
-
-  const comparativeRevenue = computed(() => dashboardData.value?.comparative.total_revenue ?? 0)
 
   const revenueByPlate = computed(() => {
     if (!dashboardData.value) return []
@@ -162,10 +129,7 @@ export const useDashboard = () => {
     vehicleStats,
     monthInfo,
     contractInfo,
-    dailyData,
-    weeklyData,
     totalRevenue,
-    comparativeRevenue,
     revenueByPlate,
     formatMonthDate,
     clearDashboard,
