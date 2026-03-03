@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { useApi } from './useApi'
+import { useMonthFilter } from './useMonthFilter'
 
 interface VehicleStats {
   rented: number
@@ -53,6 +54,7 @@ const dashboardData = ref<DashboardData | null>(null)
 
 export const useDashboard = () => {
   const api = useApi()
+  const { selectedMonth, setContractStartDate } = useMonthFilter()
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
@@ -61,8 +63,11 @@ export const useDashboard = () => {
     error.value = null
 
     try {
-      const response = await api.get<DashboardResponse>('/investors/dashboard')
+      const response = await api.get<DashboardResponse>('/investors/dashboard', {
+        params: { month: selectedMonth.value },
+      })
       dashboardData.value = response.data.data
+      setContractStartDate(response.data.data.contract_start_date ?? null)
       return { success: true }
     } catch (err: any) {
       error.value = err.response?.data?.message || 'Erro ao carregar dashboard'

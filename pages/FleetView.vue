@@ -9,11 +9,13 @@ import { useAuth } from '~/composables/useAuth'
 import { useFleet } from '~/composables/useFleet'
 import { useModal } from '~/composables/useModal'
 import { useMotoData } from '~/composables/useMotoData'
+import { useMonthFilter } from '~/composables/useMonthFilter'
 
 const { user: authUser } = useAuth()
 const { user } = useMotoData()
 const { fleetData, fetchFleet, isLoading, error } = useFleet()
 const { isOpen, isAnimating, selectedVehicle, openModal, closeModal } = useModal()
+const { selectedMonth, availableMonths, setMonth } = useMonthFilter()
 
 const searchQuery = ref('')
 const statusFilter = ref<string | null>(null)
@@ -24,6 +26,12 @@ const statusOptions = [
   { value: 'available', label: 'Disponíveis', color: 'emerald' },
   { value: 'unavailable', label: 'Indisponíveis', color: 'red' },
 ]
+
+const onMonthChange = async (event: Event) => {
+  const value = (event.target as HTMLSelectElement).value
+  setMonth(value)
+  await fetchFleet()
+}
 
 onMounted(async () => {
   await fetchFleet()
@@ -74,6 +82,22 @@ const toggleStatusFilter = (status: string) => {
       :user-initials="userInitials"
       :user-role="user.role"
     />
+
+    <div class="flex items-center gap-3 mb-6">
+      <select
+        :value="selectedMonth"
+        class="bg-slate-900/50 border border-slate-800 rounded-2xl py-3 px-4 text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer"
+        @change="onMonthChange"
+      >
+        <option
+          v-for="month in availableMonths"
+          :key="month.value"
+          :value="month.value"
+        >
+          {{ month.label }}
+        </option>
+      </select>
+    </div>
 
     <div class="space-y-4 mb-8">
       <div class="relative flex-1 max-w-md">

@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { useApi } from './useApi'
+import { useMonthFilter } from './useMonthFilter'
 
 export interface Vehicle {
   vehicle_id: number
@@ -16,11 +17,21 @@ export interface Vehicle {
   paid_amount: number
 }
 
+interface FleetResponse {
+  status: string
+  message: string
+  data: {
+    contract_start_date: string | null
+    vehicles: Vehicle[]
+  }
+}
+
 // Module-level singleton state
 const fleetData = ref<Vehicle[]>([])
 
 export const useFleet = () => {
   const api = useApi()
+  const { selectedMonth, setContractStartDate } = useMonthFilter()
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
@@ -29,8 +40,12 @@ export const useFleet = () => {
     error.value = null
 
     try {
-      const response = await api.get<Vehicle[]>('/investors/fleet')
-      fleetData.value = Array.isArray(response.data) ? response.data : []
+      const response = await api.get<FleetResponse>('/investors/fleet', {
+        params: { month: selectedMonth.value },
+      })
+      const { contract_start_date, vehicles } = response.data.data
+      fleetData.value = Array.isArray(vehicles) ? vehicles : []
+      setContractStartDate(contract_start_date ?? null)
       return { success: true }
     } catch (err: any) {
       error.value = err.response?.data?.message || 'Erro ao carregar frota'

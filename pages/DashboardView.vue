@@ -9,6 +9,7 @@ import VehicleList from '~/components/VehicleList.vue'
 import { useAuth } from '~/composables/useAuth'
 import { useDashboard } from '~/composables/useDashboard'
 import { useMotoData } from '~/composables/useMotoData'
+import { useMonthFilter } from '~/composables/useMonthFilter'
 
 const { user: authUser } = useAuth()
 const { user } = useMotoData()
@@ -24,6 +25,13 @@ const {
   revenueByPlate,
   formatMonthDate,
 } = useDashboard()
+const { selectedMonth, availableMonths, setMonth } = useMonthFilter()
+
+const onMonthChange = async (event: Event) => {
+  const value = (event.target as HTMLSelectElement).value
+  setMonth(value)
+  await fetchDashboard()
+}
 
 onMounted(async () => {
   await fetchDashboard()
@@ -53,6 +61,22 @@ const userInitials = computed(() => {
       :user-initials="userInitials"
       :user-role="user.role"
     />
+
+    <div class="flex items-center gap-3">
+      <select
+        :value="selectedMonth"
+        class="bg-slate-900/50 border border-slate-800 rounded-2xl py-3 px-4 text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer"
+        @change="onMonthChange"
+      >
+        <option
+          v-for="month in availableMonths"
+          :key="month.value"
+          :value="month.value"
+        >
+          {{ month.label }}
+        </option>
+      </select>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       <StatsCard
