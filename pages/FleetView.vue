@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { Search } from 'lucide-vue-next'
+import { Search, ShieldCheck } from 'lucide-vue-next'
 import type { Vehicle } from '~/types'
 import AppHeader from '~/components/AppHeader.vue'
 import FleetCard from '~/components/FleetCard.vue'
@@ -13,7 +13,7 @@ import { useMonthFilter } from '~/composables/useMonthFilter'
 
 const { user: authUser } = useAuth()
 const { user } = useMotoData()
-const { fleetData, fetchFleet, isLoading, error } = useFleet()
+const { fleetData, totalInsurance, fetchFleet, isLoading, error } = useFleet()
 const { isOpen, isAnimating, selectedVehicle, openModal, closeModal } = useModal()
 const { selectedMonth, availableMonths, setMonth } = useMonthFilter()
 
@@ -67,6 +67,10 @@ const filteredVehicles = computed(() => {
 })
 
 const handleOpenModal = (vehicle: Vehicle) => openModal(vehicle)
+
+const formattedTotalInsurance = computed(() =>
+  totalInsurance.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+)
 
 const toggleStatusFilter = (status: string) => {
   statusFilter.value = statusFilter.value === status ? null : status
@@ -149,6 +153,12 @@ const toggleStatusFilter = (status: string) => {
     </div>
 
     <template v-else>
+      <div v-if="totalInsurance > 0" class="flex items-center gap-2 mb-6 px-4 py-3 glass-panel rounded-2xl w-fit">
+        <ShieldCheck class="w-4 h-4 text-rose-400 shrink-0" />
+        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Total de Seguros</span>
+        <span class="text-sm font-bold text-rose-400">{{ formattedTotalInsurance }}</span>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <FleetCard
           v-for="vehicle in filteredVehicles"

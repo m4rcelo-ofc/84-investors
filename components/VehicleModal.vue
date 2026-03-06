@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { X, Camera } from 'lucide-vue-next'
+import { X, Camera, ShieldCheck } from 'lucide-vue-next'
 import type { Vehicle } from '~/types'
 import { useFleet } from '~/composables/useFleet'
 
@@ -131,11 +131,20 @@ const handleBackdropClick = (e: MouseEvent) => {
                   {{ formatCurrency(vehicle.a_receber) }}
                 </span>
               </div>
-              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mb-3">
                 <div
                   class="h-full bg-blue-500 transition-all duration-500"
                   :style="{ width: `${vehicle.bar_pct}%` }"
                 />
+              </div>
+              <div v-if="vehicle.insurance > 0" class="flex justify-between items-center pt-3 border-t border-slate-800">
+                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1">
+                  <ShieldCheck class="w-3 h-3 text-rose-400" />
+                  Seguro
+                </span>
+                <span class="text-rose-400 font-bold text-sm">
+                  - {{ formatCurrency(vehicle.insurance) }}
+                </span>
               </div>
             </div>
           </div>

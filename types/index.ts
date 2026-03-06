@@ -10,6 +10,7 @@ export interface Vehicle {
   chassi: string
   image: string | null
   a_receber: number
+  insurance: number
   bar_pct: number
 }
 

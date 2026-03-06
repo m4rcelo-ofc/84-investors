@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Camera, Info } from 'lucide-vue-next'
+import { Camera, Info, ShieldCheck } from 'lucide-vue-next'
 import type { Vehicle } from '~/types'
 import { useFleet } from '~/composables/useFleet'
 
@@ -89,13 +89,26 @@ const formatCurrency = (value: number) =>
       </div>
 
       <div class="space-y-3">
-        <div class="flex justify-between items-end">
+        <div class="flex justify-between items-center">
           <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">
             A Receber
           </span>
-          <span class="text-base font-bold text-blue-400">
-            {{ formatCurrency(vehicle.a_receber) }}
-          </span>
+          <div class="flex items-center gap-2">
+            <div v-if="vehicle.insurance > 0" class="relative group flex items-center gap-1 cursor-default">
+              <ShieldCheck class="w-3 h-3 text-rose-400" />
+              <span class="text-xs font-semibold text-rose-400">
+                - {{ formatCurrency(vehicle.insurance) }}
+              </span>
+              <div
+                class="absolute bottom-full right-0 mb-2 px-2.5 py-1.5 bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"
+              >
+                Seguro deduzido do repasse
+              </div>
+            </div>
+            <span class="text-base font-bold text-blue-400">
+              {{ formatCurrency(vehicle.a_receber) }}
+            </span>
+          </div>
         </div>
         <div class="w-full h-2 bg-slate-800/60 rounded-full overflow-hidden">
           <div

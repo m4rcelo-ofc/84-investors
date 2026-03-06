@@ -14,6 +14,7 @@ export interface Vehicle {
   chassi: string
   image: string | null
   a_receber: number
+  insurance: number
   bar_pct: number
 }
 
@@ -22,12 +23,14 @@ interface FleetResponse {
   message: string
   data: {
     contract_start_date: string | null
+    total_insurance: number
     vehicles: Vehicle[]
   }
 }
 
 // Module-level singleton state
 const fleetData = ref<Vehicle[]>([])
+const totalInsurance = ref<number>(0)
 
 export const useFleet = () => {
   const api = useApi()
@@ -43,8 +46,9 @@ export const useFleet = () => {
       const response = await api.get<FleetResponse>('/investors/fleet', {
         params: { month: selectedMonth.value },
       })
-      const { contract_start_date, vehicles } = response.data.data
+      const { contract_start_date, total_insurance, vehicles } = response.data.data
       fleetData.value = Array.isArray(vehicles) ? vehicles : []
+      totalInsurance.value = total_insurance ?? 0
       setContractStartDate(contract_start_date ?? null)
       return { success: true }
     } catch (err: any) {
@@ -73,6 +77,7 @@ export const useFleet = () => {
 
   return {
     fleetData,
+    totalInsurance,
     isLoading,
     error,
     fetchFleet,
