@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Wallet, TrendingUp, Calendar, Clock, ArrowUpRight, ArrowDownRight } from 'lucide-vue-next'
+import { Wallet, TrendingUp, Calendar, Clock, ShieldCheck, ArrowUpRight, ArrowDownRight } from 'lucide-vue-next'
 
 interface Props {
-  type: 'investment' | 'rentability' | 'contract' | 'payment'
+  type: 'investment' | 'rentability' | 'contract' | 'payment' | 'insurance'
   value: string
   label: string
   subtext?: string
@@ -20,6 +20,7 @@ const iconComponents = {
   rentability: TrendingUp,
   contract: Calendar,
   payment: Clock,
+  insurance: ShieldCheck,
 }
 </script>
 

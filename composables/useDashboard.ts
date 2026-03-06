@@ -17,7 +17,9 @@ interface MonthInfo {
 
 interface Financials {
   total_revenue: number
+  total_insurance: number
   by_plate: Record<string, number>
+  insurance_by_plate: Record<string, number>
 }
 
 interface DashboardData {
@@ -102,12 +104,15 @@ export const useDashboard = () => {
   })
 
   const totalRevenue = computed(() => dashboardData.value?.financials.total_revenue ?? 0)
+  const totalInsurance = computed(() => dashboardData.value?.financials.total_insurance ?? 0)
 
   const revenueByPlate = computed(() => {
     if (!dashboardData.value) return []
+    const insuranceByPlate = dashboardData.value.financials.insurance_by_plate ?? {}
     return Object.entries(dashboardData.value.financials.by_plate).map(([plate, received]) => ({
       plate,
       received,
+      insurance: insuranceByPlate[plate] ?? 0,
     }))
   })
 
@@ -130,6 +135,7 @@ export const useDashboard = () => {
     monthInfo,
     contractInfo,
     totalRevenue,
+    totalInsurance,
     revenueByPlate,
     formatMonthDate,
     clearDashboard,

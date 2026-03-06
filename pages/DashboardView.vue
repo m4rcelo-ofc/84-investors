@@ -17,6 +17,7 @@ const {
   monthInfo,
   contractInfo,
   totalRevenue,
+  totalInsurance,
   revenueByPlate,
 } = useDashboard()
 const { selectedMonth, availableMonths, setMonth } = useMonthFilter()
@@ -47,6 +48,10 @@ const userInitials = computed(() => {
 
 const formattedTotalRevenue = computed(() =>
   totalRevenue.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+)
+
+const formattedTotalInsurance = computed(() =>
+  totalInsurance.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
 )
 
 const currentMonthLabel = computed(() => {
@@ -88,11 +93,17 @@ const contractStartSubtext = computed(() =>
       </select>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <StatsCard
         type="investment"
         label="Valor a Receber"
         :value="formattedTotalRevenue"
+      />
+      <StatsCard
+        type="insurance"
+        label="Total de Seguros"
+        :value="formattedTotalInsurance"
+        subtext="Deduzido do repasse"
       />
       <StatsCard
         type="payment"
